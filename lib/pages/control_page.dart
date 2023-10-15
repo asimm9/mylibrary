@@ -19,6 +19,7 @@ class _HomePageState extends State<ControlPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         bottomNavigationBar: ConvexAppBar(
           backgroundColor: Colors.white,
           elevation: 0,

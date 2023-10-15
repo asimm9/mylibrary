@@ -1,7 +1,5 @@
 // ignore_for_file: constant_identifier_names
 
-enum ItemType { SERIES, FILM, BOOK }
-
 class CardModel {
   String itemName;
   String itemCreater;
@@ -9,8 +7,10 @@ class CardModel {
   int itemRate;
   bool isFavorite;
   DateTime createTime;
+  String itemType;
 
   CardModel({
+    required this.itemType,
     required this.itemName,
     required this.createTime,
     required this.isFavorite,
