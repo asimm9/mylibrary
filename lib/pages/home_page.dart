@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mylibrary/model/card_model.dart';
+import 'package:mylibrary/widgets/item_card.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -41,12 +43,19 @@ class HomePage extends StatelessWidget {
         ),
         Padding(padding: EdgeInsets.all(height * 0.018)),
         Container(
-          margin: EdgeInsets.fromLTRB(21, 0, 21, 0),
+          margin: const EdgeInsets.fromLTRB(21, 0, 21, 0),
           height: height * 0.70,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             border: Border.all(color: Colors.black38),
           ),
+          child: ListView.builder(
+              itemBuilder: (context, index) {
+                return ItemCard(
+                  cardModel: CardModel(),
+                );
+              },
+              itemCount: 1),
         )
       ],
     ));
