@@ -66,6 +66,10 @@ class LocalStorageService {
     );
   }
 
+  Future insert(CardModel model) async {
+    await database!.insert(_userTableName, model.toJson()); 
+  }
+
   Future update(int id, CardModel model) async {
     await database!.update(
       _userTableName,

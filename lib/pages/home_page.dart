@@ -12,21 +12,6 @@ class HomePage extends StatelessWidget {
     return Container(
         child: Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.question_mark, size: 30),
-            ),
-            const Text('myLibrary',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.exit_to_app, size: 30),
-            )
-          ],
-        ),
         Container(
           margin: const EdgeInsets.fromLTRB(21, 0, 21, 0),
           height: height * 0.061,
@@ -34,9 +19,11 @@ class HomePage extends StatelessWidget {
             textAlign: TextAlign.center,
             controller: searchController,
             decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.search),
+                prefixIconColor: Colors.black,
                 hintText: 'içerik ismini arayınız',
                 suffixIconColor: Colors.black,
-                suffixIcon: const Icon(Icons.search),
+                suffixIcon: const Icon(Icons.tune),
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15))),
           ),
@@ -52,8 +39,15 @@ class HomePage extends StatelessWidget {
           child: ListView.builder(
               itemBuilder: (context, index) {
                 return ItemCard(
-                  cardModel: CardModel(),
-                );
+                    cardModel: CardModel(
+                        createTime: DateTime.now(),
+                        id: 5,
+                        isFavorite: true,
+                        itemCreater: 'asdasd',
+                        itemName: 'film1',
+                        itemRate: 5,
+                        itemType: 'film',
+                        shortTextForItem: 'adsadsdas'));
               },
               itemCount: 1),
         )
