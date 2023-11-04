@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mylibrary/model/card_model.dart';
+import 'package:mylibrary/pages/detail_item_page..dart';
 
 class ItemCard extends StatelessWidget {
   final CardModel cardModel;
@@ -7,9 +8,14 @@ class ItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      onHorizontalDragStart: (details) {},
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ItemDetailPage(cardModel: cardModel),
+          ),
+        );
+      },
       child: Card(
         elevation: 3,
         shape: RoundedRectangleBorder(

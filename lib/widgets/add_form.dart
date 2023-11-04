@@ -22,97 +22,102 @@ class _AddFormState extends State<AddForm> {
     double height = MediaQuery.of(context).size.height;
     return Container(
       height: height * 0.76,
-      margin: const EdgeInsets.fromLTRB(20, 10, 20, 5),
+      margin: const EdgeInsets.fromLTRB(20, 0, 20, 10),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          TextFormField(
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'lütfen bir şeyler giriniz';
-              } else {
-                return null;
-              }
-            },
-            controller: _filmNameController,
-            decoration: InputDecoration(
-              hintText: 'Film adı',
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: const BorderSide(color: Colors.black)),
-              enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.black),
-                  borderRadius: BorderRadius.circular(15)),
-            ),
-          ),
-          TextFormField(
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'lütfen bir şeyler giriniz';
-              } else {
-                return null;
-              }
-            },
-            controller: _createrNameController,
-            decoration: InputDecoration(
-              hintText: 'Yazar veya yönetmen adı',
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: const BorderSide(color: Colors.black)),
-              enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.black),
-                  borderRadius: BorderRadius.circular(15)),
-            ),
-          ),
-          SizedBox(
-            height: height * 0.35,
-            child: TextFormField(
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'lütfen bir şeyler giriniz';
-                } else {
-                  return null;
-                }
-              },
-              minLines: 8,
-              maxLines: 8,
-              controller: _itemSumController,
-              decoration: InputDecoration(
-                hintText: 'İçerikten kısaca bahset',
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: const BorderSide(color: Colors.black)),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.black),
-                    borderRadius: BorderRadius.circular(15)),
-              ),
-            ),
-          ),
-          Slider(
-            thumbColor: Colors.black,
-            inactiveColor: Colors.black,
-            secondaryActiveColor: Colors.black,
-            activeColor: Colors.black,
-            label: _currentSliderValue.round().toString(),
-            divisions: 10,
-            max: 10,
-            value: _currentSliderValue,
-            onChanged: (value) {
-              setState(() {
-                _currentSliderValue = value;
-              });
-            },
-          ),
-          ElevatedButton(
-            style: const ButtonStyle(
-                fixedSize: MaterialStatePropertyAll(Size(150, 10)),
-                backgroundColor: MaterialStatePropertyAll(Colors.black)),
-            onPressed: () {
-              cardModel.toJson();
-            },
-            child: const Text('Ekle'),
-          )
+          _fieldNameField(),
+          _createrNameField(),
+          _summaryTextField(height),
+          _customSlider(),
+          _customElevatedButton()
         ],
+      ),
+    );
+  }
+
+  ElevatedButton _customElevatedButton() {
+    return ElevatedButton(
+      style: const ButtonStyle(
+          fixedSize: MaterialStatePropertyAll(Size(150, 10)),
+          backgroundColor: MaterialStatePropertyAll(Colors.black)),
+      onPressed: () {
+        cardModel.toJson();
+      },
+      child: const Text('Ekle'),
+    );
+  }
+
+  Slider _customSlider() {
+    return Slider(
+      thumbColor: Colors.black,
+      inactiveColor: Colors.black,
+      secondaryActiveColor: Colors.black,
+      activeColor: Colors.black,
+      label: _currentSliderValue.round().toString(),
+      divisions: 10,
+      max: 10,
+      value: _currentSliderValue,
+      onChanged: (value) {
+        setState(() {
+          _currentSliderValue = value;
+        });
+      },
+    );
+  }
+
+  SizedBox _summaryTextField(double height) {
+    return SizedBox(
+      height: height * 0.33,
+      child: TextField(
+        minLines: 8,
+        maxLines: 8,
+        controller: _itemSumController,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          hintText: 'İçerikten kısaca bahset',
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(color: Colors.black)),
+          enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.black),
+              borderRadius: BorderRadius.circular(15)),
+        ),
+      ),
+    );
+  }
+
+  TextField _createrNameField() {
+    return TextField(
+      controller: _createrNameController,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.white,
+        hintText: 'Yazar veya yönetmen adı',
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: const BorderSide(color: Colors.black)),
+        enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.black),
+            borderRadius: BorderRadius.circular(15)),
+      ),
+    );
+  }
+
+  TextField _fieldNameField() {
+    return TextField(
+      controller: _filmNameController,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.white,
+        hintText: 'Film adı',
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: const BorderSide(color: Colors.black)),
+        enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.black),
+            borderRadius: BorderRadius.circular(15)),
       ),
     );
   }

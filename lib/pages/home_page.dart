@@ -39,7 +39,8 @@ class HomePage extends StatelessWidget {
                     itemName: 'film1',
                     itemRate: 5,
                     itemType: 'film',
-                    shortTextForItem: 'adsadsdas'));
+                    shortTextForItem:
+                        'nahfbasjbfhasjbfs'));
           },
           itemCount: 1),
     );
