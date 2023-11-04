@@ -15,7 +15,7 @@ class FavoritesPage extends StatelessWidget {
         Padding(padding: EdgeInsets.all(height * 0.018)),
         _itemListField(height),
         Padding(padding: EdgeInsets.all(height * 0.008)),
-        Text('Favorilerden Çıkarmak için sola doğru kaydırınız')
+        const Text('Favorilerden Çıkarmak için sola doğru kaydırınız')
       ],
     );
   }

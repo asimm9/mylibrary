@@ -22,7 +22,7 @@ class _HomePageState extends State<ControlPage> {
         appBar: _appBar(),
         resizeToAvoidBottomInset: false,
         bottomNavigationBar: _navigationBar(),
-        backgroundColor: Color.fromRGBO(255, 250, 244, 1),
+        backgroundColor: const Color.fromRGBO(255, 250, 244, 1),
         body: pageList.elementAt(_selectedIndex));
   }
 
@@ -68,7 +68,7 @@ class _HomePageState extends State<ControlPage> {
 
   PopupMenuButton<dynamic> _popUpMenuButton() {
     return PopupMenuButton(
-      icon: Icon(Icons.menu, color: Colors.black),
+      icon: const Icon(Icons.menu, color: Colors.black),
       onSelected: (value) {},
       itemBuilder: (context) {
         return const [
