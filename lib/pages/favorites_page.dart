@@ -26,7 +26,7 @@ class FavoritesPage extends StatelessWidget {
           ),
           Padding(padding: EdgeInsets.all(height * 0.018)),
           Container(
-            margin: EdgeInsets.fromLTRB(21, 0, 21, 0),
+            margin: const EdgeInsets.fromLTRB(21, 0, 21, 0),
             height: height * 0.70,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
