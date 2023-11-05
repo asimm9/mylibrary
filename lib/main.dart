@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mylibrary/companants/constans/colors.dart';
 import 'package:mylibrary/pages/control_page.dart';
 
 void main() {
@@ -8,7 +9,6 @@ void main() {
   ));
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ControlPage(),
+      theme: ThemeData(scaffoldBackgroundColor: backgroundColor),
+      home: const ControlPage(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -53,15 +53,15 @@ class ItemDetailPage extends StatelessWidget {
                     children: [
                       Text(
                         cardModel.itemName.toString(),
-                        style: TextStyle(fontSize: 20),
+                        style: const TextStyle(fontSize: 20),
                       ),
                       Text(
                         cardModel.itemCreater.toString(),
-                        style: TextStyle(fontSize: 20),
+                        style: const TextStyle(fontSize: 20),
                       ),
                       Text(
                         cardModel.shortTextForItem.toString(),
-                        style: TextStyle(fontSize: 20),
+                        style: const TextStyle(fontSize: 20),
                       ),
                     ],
                   ),
@@ -91,7 +91,7 @@ class ItemDetailPage extends StatelessWidget {
             ],
           ),
           Text(cardModel.createTime!.year.toString()),
-          IconButton(onPressed: () {}, icon: Icon(Icons.delete_forever))
+          IconButton(onPressed: () {}, icon: const Icon(Icons.delete_forever))
         ],
       ),
     );
