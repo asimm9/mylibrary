@@ -39,6 +39,8 @@ dependencies:
   convex_bottom_bar: ^3.2.0
   shared_preferences: ^2.2.2
   sqflite: ^2.3.0
+  firebase_core: ^2.21.0
+  firebase_auth: ^4.12.1
 
 dev_dependencies:
   flutter_test:
