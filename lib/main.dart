@@ -5,7 +5,6 @@ import 'package:mylibrary/pages/control_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mylibrary/pages/login_page.dart';
 import 'package:mylibrary/providers/all_providers.dart';
-import 'package:mylibrary/services/firebase_auth_service.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -20,7 +19,6 @@ void main() async {
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authStateChangesProvider);
@@ -31,14 +29,14 @@ class MyApp extends ConsumerWidget {
           if (data != null) {
             return const ControlPage();
           } else {
-            return const LoginPage();
+            return LoginPage();
           }
         },
         error: (error, stackTrace) => ErrorWidget(error),
-        loading: () => Center(
+        loading: () => const Center(
           child: CircularProgressIndicator(),
         ),
-      ) /* const ControlPage(), */,
+      ),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -1,31 +1,20 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mylibrary/companants/constans/text_style.dart';
-import 'package:mylibrary/pages/control_page.dart';
 
-class MyButton extends StatelessWidget {
+class MyButton extends ConsumerWidget {
   final String text;
   final void Function()? onTap;
   final IconData? icon;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  MyButton({super.key, required this.text, this.onTap, this.icon});
+  const MyButton({super.key, required this.text, this.onTap, this.icon});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     Size size = MediaQuery.of(context).size;
 
     return GestureDetector(
       onTap: () {
-        if (_auth.currentUser == null) {
-          null;
-        } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const ControlPage(),
-            ),
-          );
-        }
+        onTap;
       },
       child: Container(
         alignment: Alignment.center,

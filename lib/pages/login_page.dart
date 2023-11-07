@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mylibrary/companants/constans/text_style.dart';
-import 'package:mylibrary/companants/my_button.dart';
-import 'package:mylibrary/companants/my_divider.dart';
+import 'package:mylibrary/widgets/my_button.dart';
+import 'package:mylibrary/widgets/my_divider.dart';
+import 'package:mylibrary/providers/all_providers.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class LoginPage extends ConsumerWidget {
+  LoginPage({super.key});
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     Size size = MediaQuery.of(context).size;
+    final _authProvider = ref.watch(authenticationProvider);
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Center(
         child: SizedBox(
           width: size.width * 0.85,
@@ -24,15 +30,27 @@ class LoginPage extends StatelessWidget {
               _forgotPasswordText(),
               const SizedBox(height: 15),
               MyButton(
+                onTap: () {
+                  ref
+                      .watch(authenticationProvider.notifier)
+                      .signIn(emailController.text, passwordController.text);
+                },
                 text: 'Sign In',
               ),
               const SizedBox(height: 15),
               const MyDivider(),
               const SizedBox(height: 15),
-              MyButton(
+              /* MyButton(
                 text: 'Continue with Google',
                 icon: Icons.mail,
-              ),
+              ), */
+              ElevatedButton(
+                  onPressed: () {
+                    ref
+                        .watch(authenticationProvider.notifier)
+                        .signIn(emailController.text, passwordController.text);
+                  },
+                  child: Text('sign ın'))
             ],
           ),
         ),
@@ -64,6 +82,7 @@ class LoginPage extends StatelessWidget {
     return SizedBox(
       height: size.height * 0.1,
       child: TextFormField(
+        controller: passwordController,
         decoration: InputDecoration(
           fillColor: Colors.white,
           filled: true,
@@ -100,6 +119,7 @@ class LoginPage extends StatelessWidget {
     return SizedBox(
       height: size.height * 0.07,
       child: TextFormField(
+        controller: emailController,
         decoration: InputDecoration(
           fillColor: Colors.white,
           filled: true,

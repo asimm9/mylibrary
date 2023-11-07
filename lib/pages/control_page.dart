@@ -1,25 +1,30 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mylibrary/pages/add_page.dart';
 import 'package:mylibrary/pages/favorites_page.dart';
 import 'package:mylibrary/pages/home_page.dart';
+import 'package:mylibrary/providers/all_providers.dart';
 
-class ControlPage extends StatefulWidget {
+import '../services/firebase_auth_service.dart';
+
+class ControlPage extends ConsumerStatefulWidget {
   const ControlPage({super.key});
 
   @override
-  State<ControlPage> createState() => _HomePageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ControlPageState();
 }
 
-class _HomePageState extends State<ControlPage> {
+class _ControlPageState extends ConsumerState<ControlPage> {
   List<Widget> pageList = [HomePage(), const AddPage(), FavoritesPage()];
   int _selectedIndex = 0;
-
   @override
   Widget build(BuildContext context) {
+    final authProvider = ref.watch(authenticationProvider);
+
     return Scaffold(
-        appBar: _appBar(),
+        appBar: _appBar(authProvider),
         resizeToAvoidBottomInset: false,
         bottomNavigationBar: _navigationBar(),
         backgroundColor: const Color.fromRGBO(255, 250, 244, 1),
@@ -45,7 +50,7 @@ class _HomePageState extends State<ControlPage> {
     );
   }
 
-  AppBar _appBar() {
+  AppBar _appBar(FirebaseAuthService authProvider) {
     return AppBar(
       centerTitle: true,
       title: const Text(
@@ -62,37 +67,47 @@ class _HomePageState extends State<ControlPage> {
           color: Colors.black,
         ),
       ),
-      actions: [_popUpMenuButton()],
+      actions: [_popUpMenuButton(authProvider)],
     );
   }
 
-  PopupMenuButton<dynamic> _popUpMenuButton() {
+  PopupMenuButton<dynamic> _popUpMenuButton(FirebaseAuthService authProvider) {
     return PopupMenuButton(
       icon: const Icon(Icons.menu, color: Colors.black),
-      onSelected: (value) {},
+      onSelected: (value) {
+        if (value == 3) {
+          authProvider.signOut();
+        }
+      },
       itemBuilder: (context) {
         return const [
           PopupMenuItem(
+              value: 1,
               child: Row(
-            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Icon(Icons.dark_mode, color: Colors.black),
-              Text('Karanlık mod')
-            ],
-          )),
+                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(Icons.dark_mode, color: Colors.black),
+                  Text('Karanlık mod')
+                ],
+              )),
           PopupMenuItem(
+              value: 2,
               child: Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [Icon(Icons.info, color: Colors.black), Text('Hakkında')],
-          )),
+                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(Icons.info, color: Colors.black),
+                  Text('Hakkında')
+                ],
+              )),
           PopupMenuItem(
+              value: 3,
               child: Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Icon(Icons.logout, color: Colors.black),
-              Text('Çıkış yap')
-            ],
-          ))
+                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(Icons.logout, color: Colors.black),
+                  Text('Çıkış yap')
+                ],
+              ))
         ];
       },
     );

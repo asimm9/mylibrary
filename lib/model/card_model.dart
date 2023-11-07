@@ -1,5 +1,5 @@
 class CardModel {
-  int? id;
+  String? id;
   String? itemName;
   String? itemCreater;
   String? shortTextForItem;
