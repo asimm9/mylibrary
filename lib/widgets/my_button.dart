@@ -4,18 +4,17 @@ import 'package:mylibrary/companants/constans/text_style.dart';
 
 class MyButton extends ConsumerWidget {
   final String text;
-  final void Function()? onTap;
+  final void Function() onTap;
   final IconData? icon;
-  const MyButton({super.key, required this.text, this.onTap, this.icon});
+  const MyButton(
+      {super.key, required this.text, required this.onTap, this.icon});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Size size = MediaQuery.of(context).size;
 
     return GestureDetector(
-      onTap: () {
-        onTap;
-      },
+      onTap: onTap,
       child: Container(
         alignment: Alignment.center,
         height: size.height * 0.07,
