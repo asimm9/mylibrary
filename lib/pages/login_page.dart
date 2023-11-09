@@ -40,17 +40,11 @@ class LoginPage extends ConsumerWidget {
               const SizedBox(height: 15),
               const MyDivider(),
               const SizedBox(height: 15),
-              /* MyButton(
+              MyButton(
+                onTap: () {},
                 text: 'Continue with Google',
                 icon: Icons.mail,
-              ), */
-              ElevatedButton(
-                  onPressed: () {
-                    ref
-                        .watch(authenticationProvider.notifier)
-                        .signIn(emailController.text, passwordController.text);
-                  },
-                  child: Text('sign ın'))
+              ),
             ],
           ),
         ),

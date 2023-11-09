@@ -4,6 +4,7 @@ import 'package:mylibrary/companants/constans/colors.dart';
 import 'package:mylibrary/pages/control_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mylibrary/pages/login_page.dart';
+import 'package:mylibrary/pages/register_page.dart';
 import 'package:mylibrary/providers/all_providers.dart';
 import 'firebase_options.dart';
 
