@@ -35,7 +35,7 @@ class FavoritesPage extends StatelessWidget {
         itemBuilder: (context, index) {
           return ItemCard(
               cardModel: CardModel(
-            createTime: DateTime.now(),
+            createTime: 'assdasf',
             id: '5',
             isFavorite: true,
             itemCreater: 'asda',

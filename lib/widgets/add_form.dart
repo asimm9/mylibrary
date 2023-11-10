@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mylibrary/model/card_model.dart';
-import 'package:mylibrary/services/local_storage.dart';
+import 'package:mylibrary/providers/all_providers.dart';
+import 'package:mylibrary/services/firestore_service.dart';
+import 'package:uuid/uuid.dart';
 
-class AddForm extends StatefulWidget {
+class AddForm extends ConsumerStatefulWidget {
   const AddForm({super.key});
 
   @override
-  State<AddForm> createState() => _AddFormState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _AddFormState();
 }
 
-class _AddFormState extends State<AddForm> {
+class _AddFormState extends ConsumerState<AddForm> {
   final TextEditingController _filmNameController = TextEditingController();
   final TextEditingController _createrNameController = TextEditingController();
   final TextEditingController _itemSumController = TextEditingController();
   double _currentSliderValue = 0;
-  final CardModel cardModel = CardModel();
-  final LocalStorageService localStorageService = LocalStorageService();
+  Uuid _uuid = Uuid();
 
   @override
   Widget build(BuildContext context) {
+    FireStoreService fireStoreService = ref.watch(fireStoreServiceProvider);
     double height = MediaQuery.of(context).size.height;
     return Container(
       height: height * 0.76,
@@ -30,19 +33,27 @@ class _AddFormState extends State<AddForm> {
           _createrNameField(),
           _summaryTextField(height),
           _customSlider(),
-          _customElevatedButton()
+          _customElevatedButton(fireStoreService)
         ],
       ),
     );
   }
 
-  ElevatedButton _customElevatedButton() {
+  ElevatedButton _customElevatedButton(FireStoreService fireStoreService) {
     return ElevatedButton(
       style: const ButtonStyle(
           fixedSize: MaterialStatePropertyAll(Size(150, 10)),
           backgroundColor: MaterialStatePropertyAll(Colors.black)),
       onPressed: () {
-        cardModel.toJson();
+        fireStoreService.saveCard(CardModel(
+            id: _uuid.v4(),
+            createTime: 'asdsad',
+            isFavorite: false,
+            itemCreater: _createrNameController.text,
+            itemName: _filmNameController.text,
+            itemRate: _currentSliderValue.toInt(),
+            itemType: 'film',
+            shortTextForItem: _itemSumController.text));
       },
       child: const Text('Ekle'),
     );

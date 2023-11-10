@@ -3,9 +3,9 @@ class CardModel {
   String? itemName;
   String? itemCreater;
   String? shortTextForItem;
-  double? itemRate;
+  int? itemRate;
   bool? isFavorite;
-  DateTime? createTime;
+  String? createTime;
   String? itemType;
 
   CardModel({

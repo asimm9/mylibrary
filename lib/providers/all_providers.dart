@@ -13,6 +13,7 @@ final authStateChangesProvider = StreamProvider<User?>((ref) {
 
 final fireStoreServiceProvider =
     ChangeNotifierProvider<FireStoreService>((ref) => FireStoreService());
+
 final showPageChangeProvider =
     ChangeNotifierProvider<showPage>((ref) => showPage());
 

@@ -13,7 +13,6 @@ class LoginPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Size size = MediaQuery.of(context).size;
-    final _authProvider = ref.watch(authenticationProvider);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: Center(

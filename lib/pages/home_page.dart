@@ -22,38 +22,44 @@ class HomePage extends ConsumerWidget {
   }
 
   Container _itemListContainer(double height, WidgetRef ref) {
+    var _cardsStream = ref.watch(fireStoreServiceProvider.notifier).getCards();
     return Container(
-        padding: EdgeInsets.all(height * 0.018),
-        margin: const EdgeInsets.fromLTRB(21, 0, 21, 0),
-        height: height * 0.67,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.black, width: 1.3),
-        ),
-        child: StreamBuilder(
-          stream: ref.watch(fireStoreServiceProvider).getCards(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  List<QueryDocumentSnapshot<Map<String, dynamic>>> data =
-                      snapshot.data!.docs;
-
-                  return ItemCard(
-                      cardModel: CardModel.fromJson(
-                          data[index] as Map<String, dynamic>));
-                },
-              );
-            }
-          },
-        ));
+      padding: EdgeInsets.all(height * 0.018),
+      margin: const EdgeInsets.fromLTRB(21, 0, 21, 0),
+      height: height * 0.67,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: Colors.black, width: 1.3),
+      ),
+      child: StreamBuilder(
+        stream: _cardsStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text('errrorr'),
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                var data = snapshot.data!.docs
+                    .map((DocumentSnapshot documentSnapshot) =>
+                        documentSnapshot.data() as Map<String, dynamic>)
+                    .toList();
+                return ItemCard(cardModel: CardModel.fromJson(data[index]));
+              },
+            );
+          }
+        },
+      ),
+    );
   }
 
   Container _searchContainer(double height) {

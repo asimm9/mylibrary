@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mylibrary/companants/constans/text_style.dart';
+import 'package:mylibrary/pages/login_page.dart';
 import 'package:mylibrary/widgets/my_button.dart';
 import 'package:mylibrary/providers/all_providers.dart';
 
@@ -16,7 +17,6 @@ class RegisterPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Size size = MediaQuery.of(context).size;
-    final _authProvider = ref.watch(authenticationProvider);
     final showPageProvider = ref.watch(showPageChangeProvider);
 
     return Scaffold(
@@ -36,7 +36,7 @@ class RegisterPage extends ConsumerWidget {
                 const SizedBox(height: 15),
                 _passwordField(size),
                 _confirmPasswordField(size),
-                _createNewAccount(showPageProvider),
+                _createNewAccount(showPageProvider, context),
                 const SizedBox(height: 15),
                 MyButton(
                   onTap: () {
@@ -204,7 +204,7 @@ class RegisterPage extends ConsumerWidget {
     );
   }
 
-  Align _createNewAccount(showPage showPageProvider) {
+  Align _createNewAccount(showPage showPageProvider, BuildContext context) {
     return Align(
       alignment: Alignment.center,
       child: Row(
@@ -230,7 +230,13 @@ class RegisterPage extends ConsumerWidget {
                 const EdgeInsets.only(right: 20),
               ),
             ),
-            child: const Text('Sign In'),
+            child: InkWell(
+                onTap: () {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                  ));
+                },
+                child: const Text('Sign In')),
           )
         ],
       ),
