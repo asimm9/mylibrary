@@ -42,8 +42,6 @@ class FireStoreService extends ChangeNotifier {
         .get();
   } */
 
-  updateCard() async {}
-
   controlFavorite(String id, bool newValue) async {
     await _firestore
         .collection('UserCard')
@@ -51,6 +49,15 @@ class FireStoreService extends ChangeNotifier {
         .collection('Cards')
         .doc(id)
         .update({'isFavorite': newValue});
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getFavoriteList() {
+    return _firestore
+        .collection('UserCard')
+        .doc(_auth.currentUser!.uid)
+        .collection('Cards')
+        .where('isFavorite', isEqualTo: true)
+        .snapshots();
   }
 
   deleteCard() async {}
