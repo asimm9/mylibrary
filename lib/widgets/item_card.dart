@@ -33,7 +33,7 @@ class ItemCard extends StatelessWidget {
             Icon(
               Icons.star,
               size: 20,
-              color: Colors.yellow.shade400,
+              color: Colors.purple.shade400,
             )
           ]),
           title: Text(cardModel.itemName!),
