@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mylibrary/companants/constans/text_style.dart';
+import 'package:mylibrary/companants/text_style.dart';
 
 class MyDivider extends StatelessWidget {
   const MyDivider({super.key});

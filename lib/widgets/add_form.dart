@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mylibrary/companants/text_style.dart';
 import 'package:mylibrary/model/card_model.dart';
 import 'package:mylibrary/providers/all_providers.dart';
 import 'package:mylibrary/services/firestore_service.dart';
@@ -17,14 +18,14 @@ class _AddFormState extends ConsumerState<AddForm> {
   final TextEditingController _createrNameController = TextEditingController();
   final TextEditingController _itemSumController = TextEditingController();
   double _currentSliderValue = 0;
-  Uuid _uuid = Uuid();
+  final Uuid _uuid = const Uuid();
 
   @override
   Widget build(BuildContext context) {
     FireStoreService fireStoreService = ref.watch(fireStoreServiceProvider);
     double height = MediaQuery.of(context).size.height;
     return Container(
-      height: height * 0.76,
+      height: height * 0.72,
       margin: const EdgeInsets.fromLTRB(20, 0, 20, 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -41,9 +42,10 @@ class _AddFormState extends ConsumerState<AddForm> {
 
   ElevatedButton _customElevatedButton(FireStoreService fireStoreService) {
     return ElevatedButton(
-      style: const ButtonStyle(
-          fixedSize: MaterialStatePropertyAll(Size(150, 10)),
-          backgroundColor: MaterialStatePropertyAll(Colors.black)),
+      style: ButtonStyle(
+          fixedSize: const MaterialStatePropertyAll(Size(150, 10)),
+          backgroundColor:
+              MaterialStatePropertyAll(Theme.of(context).colorScheme.tertiary)),
       onPressed: () {
         fireStoreService.saveCard(CardModel(
             id: _uuid.v4(),
@@ -55,16 +57,19 @@ class _AddFormState extends ConsumerState<AddForm> {
             itemType: 'film',
             shortTextForItem: _itemSumController.text));
       },
-      child: const Text('Ekle'),
+      child: Text(
+        'Ekle',
+        style: addButtonTextStyle,
+      ),
     );
   }
 
   Slider _customSlider() {
     return Slider(
-      thumbColor: Colors.black,
-      inactiveColor: Colors.black,
-      secondaryActiveColor: Colors.black,
-      activeColor: Colors.black,
+      thumbColor: Theme.of(context).colorScheme.tertiary,
+      inactiveColor: Theme.of(context).colorScheme.tertiary,
+      secondaryActiveColor: Theme.of(context).colorScheme.tertiary,
+      activeColor: Theme.of(context).colorScheme.tertiary,
       label: _currentSliderValue.round().toString(),
       divisions: 10,
       max: 10,
@@ -86,13 +91,16 @@ class _AddFormState extends ConsumerState<AddForm> {
         controller: _itemSumController,
         decoration: InputDecoration(
           filled: true,
-          fillColor: Colors.white,
+          fillColor: Theme.of(context).colorScheme.primary,
           hintText: 'İçerikten kısaca bahset',
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(color: Colors.black)),
+            borderRadius: BorderRadius.circular(15),
+            borderSide:
+                BorderSide(color: Theme.of(context).colorScheme.tertiary),
+          ),
           enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.black),
+              borderSide:
+                  BorderSide(color: Theme.of(context).colorScheme.tertiary),
               borderRadius: BorderRadius.circular(15)),
         ),
       ),
@@ -104,13 +112,15 @@ class _AddFormState extends ConsumerState<AddForm> {
       controller: _createrNameController,
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.white,
+        fillColor: Theme.of(context).colorScheme.primary,
         hintText: 'Yazar veya yönetmen adı',
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: const BorderSide(color: Colors.black)),
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary),
+        ),
         enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.black),
+            borderSide:
+                BorderSide(color: Theme.of(context).colorScheme.tertiary),
             borderRadius: BorderRadius.circular(15)),
       ),
     );
@@ -121,13 +131,15 @@ class _AddFormState extends ConsumerState<AddForm> {
       controller: _filmNameController,
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.white,
+        fillColor: Theme.of(context).colorScheme.primary,
         hintText: 'Film adı',
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: const BorderSide(color: Colors.black)),
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary),
+        ),
         enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.black),
+            borderSide:
+                BorderSide(color: Theme.of(context).colorScheme.tertiary),
             borderRadius: BorderRadius.circular(15)),
       ),
     );

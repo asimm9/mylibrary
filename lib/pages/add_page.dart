@@ -13,7 +13,7 @@ class AddPage extends ConsumerWidget {
         SizedBox(
           height: height * 0.035,
         ),
-        AddForm()
+        const AddForm()
       ],
     );
   }

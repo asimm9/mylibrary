@@ -12,39 +12,43 @@ class FavoritesPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Stream<QuerySnapshot<Map<String, dynamic>>> _favoriteCardsStream =
+    Stream<QuerySnapshot<Map<String, dynamic>>> favoriteCardsStream =
         ref.watch(fireStoreServiceProvider.notifier).getFavoriteList();
     double height = MediaQuery.of(context).size.height;
     return Column(
       children: [
-        _searchField(height),
+        _searchField(height, context),
         Padding(padding: EdgeInsets.all(height * 0.018)),
-        _itemListField(height, _favoriteCardsStream),
+        _itemListField(height, favoriteCardsStream, context),
         Padding(padding: EdgeInsets.all(height * 0.008)),
         const Text('Favorilerden Çıkarmak için sola doğru kaydırınız')
       ],
     );
   }
 
-  Container _itemListField(double height,
-      Stream<QuerySnapshot<Map<String, dynamic>>> _favoriteCardsStream) {
+  Container _itemListField(
+      double height,
+      Stream<QuerySnapshot<Map<String, dynamic>>> favoriteCardsStream,
+      BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(height * 0.018),
+        padding: EdgeInsets.symmetric(
+            horizontal: height * 0.018, vertical: height * 0.002),
         margin: const EdgeInsets.fromLTRB(21, 0, 21, 0),
         height: height * 0.62,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.black, width: 1.2),
+          border: Border.all(
+              color: Theme.of(context).colorScheme.tertiary, width: 1.2),
         ),
         child: StreamBuilder(
-          stream: _favoriteCardsStream,
+          stream: favoriteCardsStream,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Text(snapshot.error.toString());
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Text('loading');
+              return const Text('loading');
             } else {
               return ListView.builder(
                 itemCount: snapshot.data!.docs.length,
@@ -61,12 +65,12 @@ class FavoritesPage extends ConsumerWidget {
         ));
   }
 
-  Container _searchField(double height) {
+  Container _searchField(double height, BuildContext context) {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.black),
-          color: Colors.white),
+          border: Border.all(color: Theme.of(context).colorScheme.tertiary),
+          color: Theme.of(context).colorScheme.primary),
       margin: const EdgeInsets.fromLTRB(21, 0, 21, 0),
       height: height * 0.061,
       child: TextField(
@@ -74,9 +78,7 @@ class FavoritesPage extends ConsumerWidget {
         controller: searchController,
         decoration: const InputDecoration(
             prefixIcon: Icon(Icons.search),
-            prefixIconColor: Colors.black,
             hintText: 'içerik ismini arayınız',
-            suffixIconColor: Colors.black,
             suffixIcon: Icon(Icons.tune),
             border: InputBorder.none),
       ),

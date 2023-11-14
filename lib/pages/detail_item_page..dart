@@ -1,12 +1,15 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mylibrary/companants/text_style.dart';
 import 'package:mylibrary/model/card_model.dart';
 import 'package:mylibrary/providers/all_providers.dart';
 
 class ItemDetailPage extends ConsumerStatefulWidget {
   final CardModel cardModel;
-  ItemDetailPage({super.key, required this.cardModel});
+  const ItemDetailPage({super.key, required this.cardModel});
 
   @override
   ConsumerState<ItemDetailPage> createState() => _ItemDetailPageState();
@@ -19,7 +22,7 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(255, 250, 244, 1),
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: _appBar(context, widget.cardModel),
       body: Center(
         child: Container(
@@ -27,7 +30,7 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
           height: size.height * 0.85,
           width: size.width * 0.9,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.primary,
             border: Border.all(color: Colors.black),
             borderRadius: BorderRadius.circular(15),
           ),
@@ -40,48 +43,61 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
     );
   }
 
-  Row _detailPart(Size size) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Film Adı:',
-              style: TextStyle(fontSize: 20),
-            ),
-            Text(
-              'Yazar Adı:',
-              style: TextStyle(fontSize: 20),
-            ),
-            Text(
-              'içerik hakkında:',
-              style: TextStyle(fontSize: 20),
-            )
-          ],
-        ),
-        SizedBox(
-          width: size.width * 0.1,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.cardModel.itemName.toString(),
-              style: const TextStyle(fontSize: 20),
-            ),
-            Text(
-              widget.cardModel.itemCreater.toString(),
-              style: const TextStyle(fontSize: 20),
-            ),
-            Text(
-              widget.cardModel.shortTextForItem.toString(),
-              style: const TextStyle(fontSize: 20),
-            ),
-          ],
-        ),
-      ],
+  Padding _detailPart(Size size) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 1),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Text(
+                'Film Adı:',
+                style: TextStyle(fontSize: 20),
+              ),
+              const SizedBox(width: 5),
+              Flexible(
+                child: Text(
+                  widget.cardModel.itemName.toString(),
+                  style: const TextStyle(fontSize: 20),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              const Text(
+                'Yazar Adı:',
+                style: TextStyle(fontSize: 20),
+              ),
+              const SizedBox(width: 5),
+              Flexible(
+                child: Text(
+                  widget.cardModel.itemCreater.toString(),
+                  style: const TextStyle(fontSize: 20),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              const Text(
+                'İçerik Hakkınadaa:',
+                style: TextStyle(fontSize: 20),
+              ),
+              const SizedBox(width: 5),
+              Flexible(
+                child: Text(
+                  widget.cardModel.shortTextForItem.toString(),
+                  maxLines: 1,
+                  style: const TextStyle(fontSize: 20),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -97,7 +113,10 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
                 Icons.star,
                 color: Colors.yellow,
               ),
-              Text(widget.cardModel.itemRate.toString()),
+              SizedBox(width: 5),
+              Text(
+                widget.cardModel.itemRate.toString(),
+              ),
             ],
           ),
           Text(widget.cardModel.createTime!),
@@ -110,10 +129,7 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
   AppBar _appBar(BuildContext context, CardModel cardModel) {
     return AppBar(
       centerTitle: true,
-      title: const Text(
-        'myLibrary',
-        style: TextStyle(color: Colors.black),
-      ),
+      title: Text('myLibrary', style: appBarTitleTextStyle),
       elevation: 0,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
       backgroundColor: Colors.transparent,
@@ -121,9 +137,9 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
         onPressed: () {
           Navigator.pop(context);
         },
-        icon: const Icon(
+        icon: Icon(
           Icons.arrow_back_ios_outlined,
-          color: Colors.black,
+          color: Theme.of(context).colorScheme.tertiary,
         ),
       ),
       actions: [
@@ -148,7 +164,7 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
                   color: Colors.red,
                 )
               : const Icon(Icons.favorite_border_rounded, size: 30),
-          color: Colors.black,
+          color: Theme.of(context).colorScheme.tertiary,
         )
       ],
     );

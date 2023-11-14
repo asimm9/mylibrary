@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mylibrary/companants/constans/text_style.dart';
+import 'package:mylibrary/companants/text_style.dart';
 
 class MyButton extends ConsumerWidget {
   final String text;

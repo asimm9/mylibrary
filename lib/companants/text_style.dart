@@ -9,3 +9,8 @@ TextStyle myButtonTextStyle = const TextStyle(
     color: Colors.white);
 TextStyle dividerTextStyle = const TextStyle(
     color: Colors.grey, fontSize: 15, fontWeight: FontWeight.w500);
+TextStyle addButtonTextStyle =
+    const TextStyle(fontSize: 15, fontWeight: FontWeight.w500);
+
+TextStyle appBarTitleTextStyle = const TextStyle(
+    fontFamily: 'Roboto', fontSize: 20, fontWeight: FontWeight.w400);
