@@ -7,10 +7,17 @@ class FireStoreService extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  List<Map<String, dynamic>>? _cardList = [];
-  List<Map<String, dynamic>>? get cardList => _cardList;
-  set cardList(List<Map<String, dynamic>>? value) {
-    _cardList = value;
+  bool _currentValue = false;
+  bool get currentValue => _currentValue;
+  set currentValue(bool value) {
+    _currentValue = value;
+    notifyListeners();
+  }
+
+  bool _lastValue = false;
+  bool get lastValue => _lastValue;
+  set lastValue(bool value) {
+    _lastValue = value;
     notifyListeners();
   }
 
@@ -33,16 +40,9 @@ class FireStoreService extends ChangeNotifier {
         .snapshots();
   }
 
-  /* getCard(String id) async {
-    await _firestore
-        .collection('UserCard')
-        .doc(_auth.currentUser!.uid)
-        .collection('Cards')
-        .doc(id)
-        .get();
-  } */
-
   controlFavorite(String id, bool newValue) async {
+    lastValue = newValue;
+
     await _firestore
         .collection('UserCard')
         .doc(_auth.currentUser!.uid)
@@ -58,6 +58,18 @@ class FireStoreService extends ChangeNotifier {
         .collection('Cards')
         .where('isFavorite', isEqualTo: true)
         .snapshots();
+  }
+
+  getCurrentBoolValue(CardModel cardModel) {
+    _firestore
+        .collection('UserCard')
+        .doc(_auth.currentUser!.uid)
+        .collection('Cards')
+        .doc(cardModel.id)
+        .get()
+        .then((value) {
+      currentValue = value.data()!['isFavorite'];
+    });
   }
 
   deleteCard() async {}

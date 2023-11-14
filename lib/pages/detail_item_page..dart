@@ -16,14 +16,21 @@ class ItemDetailPage extends ConsumerStatefulWidget {
 }
 
 class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
-  bool lastValue = false;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    initalFavoriteValue(ref.watch(fireStoreServiceProvider).currentValue);
+    ref.watch(fireStoreServiceProvider).getCurrentBoolValue(widget.cardModel);
+  }
 
   @override
   Widget build(BuildContext context) {
+    bool lastValue = ref.watch(fireStoreServiceProvider).lastValue;
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: _appBar(context, widget.cardModel),
+      appBar: _appBar(context, widget.cardModel, lastValue),
       body: Center(
         child: Container(
           padding: EdgeInsets.all(size.height * 0.018),
@@ -126,7 +133,7 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
     );
   }
 
-  AppBar _appBar(BuildContext context, CardModel cardModel) {
+  AppBar _appBar(BuildContext context, CardModel cardModel, bool lastValue) {
     return AppBar(
       centerTitle: true,
       title: Text('myLibrary', style: appBarTitleTextStyle),
@@ -154,11 +161,12 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
                 lastValue = false;
               });
             }
+            //ref.watch(fireStoreServiceProvider).getCurrentBoolValue(lastValue);
             ref
                 .watch(fireStoreServiceProvider)
                 .controlFavorite(cardModel.id!, lastValue);
           },
-          icon: lastValue == true
+          icon: ref.watch(fireStoreServiceProvider).lastValue
               ? const Icon(
                   Icons.favorite,
                   color: Colors.red,
@@ -168,5 +176,19 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
         )
       ],
     );
+  }
+
+  Widget initalFavoriteValue(bool boolValue) {
+    if (boolValue) {
+      return const Icon(
+        Icons.favorite,
+        color: Colors.red,
+      );
+    } else {
+      return const Icon(
+        Icons.favorite_border_rounded,
+        size: 30,
+      );
+    }
   }
 }
