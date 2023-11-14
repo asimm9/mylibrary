@@ -1,12 +1,15 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mylibrary/companants/constans/text_style.dart';
+import 'package:mylibrary/companants/text_style.dart';
 import 'package:mylibrary/widgets/my_button.dart';
 import 'package:mylibrary/widgets/my_divider.dart';
 import 'package:mylibrary/providers/all_providers.dart';
 
 class LoginPage extends ConsumerWidget {
-  LoginPage({super.key});
+  final VoidCallback onPressed;
+  LoginPage(this.onPressed, {super.key});
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -15,6 +18,7 @@ class LoginPage extends ConsumerWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: true,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Center(
         child: SizedBox(
           width: size.width * 0.85,
@@ -26,7 +30,7 @@ class LoginPage extends ConsumerWidget {
               _email_form_field(size),
               const SizedBox(height: 15),
               _passwordField(size),
-              _forgotPasswordText(),
+              _createNewAccount(onPressed),
               const SizedBox(height: 15),
               MyButton(
                 onTap: () {
@@ -51,23 +55,48 @@ class LoginPage extends ConsumerWidget {
     );
   }
 
-  Align _forgotPasswordText() {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: TextButton(
-        style: ButtonStyle(
-          overlayColor: MaterialStateProperty.all(Colors.transparent),
-          padding: MaterialStateProperty.all(
-              const EdgeInsets.only(bottom: 20, right: 2)),
+  _createNewAccount(VoidCallback onPressed) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Row(
+          children: [
+            const Text(
+              'Don’t have an account?',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.black,
+              ),
+            ),
+            TextButton(
+              style: ButtonStyle(
+                overlayColor: MaterialStateProperty.all(Colors.transparent),
+                padding: MaterialStateProperty.all(
+                  const EdgeInsets.only(right: 15),
+                ),
+              ),
+              onPressed: onPressed,
+              child: const Text(
+                'Sign Up',
+                style: TextStyle(fontSize: 12, color: Colors.blueAccent),
+              ),
+            ),
+          ],
         ),
-        onPressed: () {},
-        child: const Text(
-          'Forgot Password?',
-          style: TextStyle(
-            color: Colors.black,
+        TextButton(
+          style: ButtonStyle(
+            overlayColor: MaterialStateProperty.all(Colors.transparent),
+          ),
+          onPressed: () {},
+          child: const Text(
+            'Forgot Password?',
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.black,
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 

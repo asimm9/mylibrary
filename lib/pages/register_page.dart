@@ -1,12 +1,14 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mylibrary/companants/constans/text_style.dart';
-import 'package:mylibrary/pages/login_page.dart';
+import 'package:mylibrary/companants/text_style.dart';
 import 'package:mylibrary/widgets/my_button.dart';
 import 'package:mylibrary/providers/all_providers.dart';
 
 class RegisterPage extends ConsumerWidget {
-  RegisterPage({super.key});
+  final VoidCallback onPressed;
+  RegisterPage(this.onPressed, {super.key});
   final TextEditingController userNameController = TextEditingController();
 
   final TextEditingController emailController = TextEditingController();
@@ -21,6 +23,7 @@ class RegisterPage extends ConsumerWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Center(
         child: SizedBox(
           width: size.width * 0.85,
@@ -36,7 +39,7 @@ class RegisterPage extends ConsumerWidget {
                 const SizedBox(height: 15),
                 _passwordField(size),
                 _confirmPasswordField(size),
-                _createNewAccount(showPageProvider, context),
+                _signInAccount(showPageProvider, context, onPressed),
                 const SizedBox(height: 15),
                 MyButton(
                   onTap: () {
@@ -204,7 +207,8 @@ class RegisterPage extends ConsumerWidget {
     );
   }
 
-  Align _createNewAccount(showPage showPageProvider, BuildContext context) {
+  Align _signInAccount(
+      ShowPage showPageProvider, BuildContext context, VoidCallback onPressed) {
     return Align(
       alignment: Alignment.center,
       child: Row(
@@ -214,7 +218,7 @@ class RegisterPage extends ConsumerWidget {
             style: ButtonStyle(
               overlayColor: MaterialStateProperty.all(Colors.transparent),
             ),
-            onPressed: () {},
+            onPressed: () => onPressed,
             child: const Text(
               'Already you have an account',
               style: TextStyle(
@@ -223,20 +227,17 @@ class RegisterPage extends ConsumerWidget {
             ),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: onPressed,
             style: ButtonStyle(
               overlayColor: MaterialStateProperty.all(Colors.transparent),
               padding: MaterialStateProperty.all(
                 const EdgeInsets.only(right: 20),
               ),
             ),
-            child: InkWell(
-                onTap: () {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => LoginPage(),
-                  ));
-                },
-                child: const Text('Sign In')),
+            child: const Text(
+              'Sign In',
+              style: TextStyle(color: Colors.blueAccent),
+            ),
           )
         ],
       ),

@@ -12,28 +12,75 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     Size size = MediaQuery.of(context).size;
 
-    return Column(
-      children: [
-        _searchContainer(size.height),
-        Padding(padding: EdgeInsets.all(size.height * 0.018)),
-        _itemListContainer(size.height, ref)
-      ],
-    );
+    return Column(children: [
+      _searchContainer(size.height, context, size),
+      Padding(padding: EdgeInsets.all(size.height * 0.018)),
+      _itemListContainer(size.height, ref, context),
+    ]);
   }
 
-  Container _itemListContainer(double height, WidgetRef ref) {
-    var _cardsStream = ref.watch(fireStoreServiceProvider.notifier).getCards();
+  // Container _searchFilter(Size size) {
+  //   return Container(
+  //     alignment: Alignment.center,
+  //     width: size.width * 0.4,
+  //     height: size.height * 0.18,
+  //     decoration: BoxDecoration(color: Colors.grey.shade100),
+  //     child: Column(
+  //       children: [
+  //         CheckboxListTile(
+  //           checkColor: Colors.grey.shade600,
+  //           contentPadding: EdgeInsets.zero,
+  //           value: true,
+  //           onChanged: (value) {},
+  //           title: const Text(
+  //             'Film Adı',
+  //             style: TextStyle(fontSize: 15),
+  //           ),
+  //           controlAffinity: ListTileControlAffinity.leading,
+  //         ),
+  //         CheckboxListTile(
+  //           checkColor: Colors.grey.shade600,
+  //           contentPadding: EdgeInsets.zero,
+  //           value: true,
+  //           onChanged: (value) {},
+  //           title: const Text(
+  //             'Dizi Adı',
+  //             style: TextStyle(fontSize: 15),
+  //           ),
+  //           controlAffinity: ListTileControlAffinity.leading,
+  //         ),
+  //         CheckboxListTile(
+  //           checkColor: Colors.grey.shade600,
+  //           contentPadding: EdgeInsets.zero,
+  //           value: true,
+  //           onChanged: (value) {},
+  //           title: const Text(
+  //             'Kitap Adı',
+  //             style: TextStyle(fontSize: 15),
+  //           ),
+  //           controlAffinity: ListTileControlAffinity.leading,
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  Container _itemListContainer(
+      double height, WidgetRef ref, BuildContext context) {
+    var cardsStream = ref.watch(fireStoreServiceProvider.notifier).getCards();
     return Container(
-      padding: EdgeInsets.all(height * 0.018),
+      padding: EdgeInsets.symmetric(
+          horizontal: height * 0.018, vertical: height * 0.002),
       margin: const EdgeInsets.fromLTRB(21, 0, 21, 0),
       height: height * 0.67,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.primary,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.black, width: 1.3),
+        border: Border.all(
+            color: Theme.of(context).colorScheme.tertiary, width: 1.3),
       ),
       child: StreamBuilder(
-        stream: _cardsStream,
+        stream: cardsStream,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Center(
@@ -62,23 +109,25 @@ class HomePage extends ConsumerWidget {
     );
   }
 
-  Container _searchContainer(double height) {
+  Container _searchContainer(double height, BuildContext context, Size size) {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.black),
-          color: Colors.white),
+          border: Border.all(color: Theme.of(context).colorScheme.tertiary),
+          color: Theme.of(context).colorScheme.primary),
       margin: const EdgeInsets.fromLTRB(21, 0, 21, 0),
       height: height * 0.061,
       child: TextField(
         textAlign: TextAlign.center,
         controller: searchController,
-        decoration: const InputDecoration(
-            prefixIcon: Icon(Icons.search),
-            prefixIconColor: Colors.black,
+        decoration: InputDecoration(
+            prefixIcon: const Icon(Icons.search),
             hintText: 'içerik ismini arayınız',
-            suffixIconColor: Colors.black,
-            suffixIcon: Icon(Icons.tune),
+            suffixIcon: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.tune),
+              splashColor: Colors.transparent,
+            ),
             border: InputBorder.none),
       ),
     );

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mylibrary/companants/constans/colors.dart';
 import 'package:mylibrary/pages/control_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:mylibrary/pages/register_page.dart';
 import 'package:mylibrary/providers/all_providers.dart';
+import 'package:mylibrary/providers/auth_page_change.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -22,14 +21,16 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authStateChangesProvider);
+    final themeModeState = ref.watch(themeModeProvider);
     return MaterialApp(
-      theme: ThemeData(scaffoldBackgroundColor: backgroundColor),
+      themeMode: ThemeMode.system,
+      theme: themeModeState.themeData,
       home: authState.when(
         data: (data) {
           if (data != null) {
             return const ControlPage();
           } else {
-            return RegisterPage();
+            return const AuthPageChange();
           }
         },
         error: (error, stackTrace) => ErrorWidget(error),
