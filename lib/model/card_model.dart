@@ -1,3 +1,5 @@
+enum ItemType { film, series, book }
+
 class CardModel {
   String? id;
   String? itemName;

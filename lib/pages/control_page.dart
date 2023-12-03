@@ -8,7 +8,6 @@ import 'package:mylibrary/pages/add_page.dart';
 import 'package:mylibrary/pages/favorites_page.dart';
 import 'package:mylibrary/pages/home_page.dart';
 import 'package:mylibrary/providers/all_providers.dart';
-
 import '../services/firebase_auth_service.dart';
 
 class ControlPage extends ConsumerStatefulWidget {
