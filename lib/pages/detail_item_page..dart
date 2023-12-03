@@ -43,7 +43,7 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [_detailPart(size), _lastRow()],
+            children: [_detailPart(size), _lastRow(widget.cardModel)],
           ),
         ),
       ),
@@ -108,7 +108,7 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
     );
   }
 
-  Padding _lastRow() {
+  Padding _lastRow(CardModel cardModel) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -127,7 +127,12 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
             ],
           ),
           Text(widget.cardModel.createTime!),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.delete_forever))
+          IconButton(
+              onPressed: () {
+                ref.watch(fireStoreServiceProvider).deleteCard(cardModel);
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.delete_forever))
         ],
       ),
     );

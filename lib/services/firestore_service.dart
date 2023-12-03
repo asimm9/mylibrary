@@ -72,5 +72,12 @@ class FireStoreService extends ChangeNotifier {
     });
   }
 
-  deleteCard() async {}
+  deleteCard(CardModel cardModel) async {
+    _firestore
+        .collection('UserCard')
+        .doc(_auth.currentUser!.uid)
+        .collection('Cards')
+        .doc(cardModel.id)
+        .delete();
+  }
 }
