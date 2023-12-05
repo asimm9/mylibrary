@@ -14,3 +14,5 @@ TextStyle addButtonTextStyle =
 
 TextStyle appBarTitleTextStyle = const TextStyle(
     fontFamily: 'Roboto', fontSize: 20, fontWeight: FontWeight.w400);
+TextStyle filterTextStyle = const TextStyle(
+    fontFamily: 'Roboto', fontSize: 20, fontWeight: FontWeight.w400);

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mylibrary/companants/text_style.dart';
@@ -46,7 +48,10 @@ class _AddFormState extends ConsumerState<AddForm> {
           fixedSize: const MaterialStatePropertyAll(Size(150, 10)),
           backgroundColor:
               MaterialStatePropertyAll(Theme.of(context).colorScheme.tertiary)),
-      onPressed: () {
+      onPressed: () async {
+        ItemType? itemType;
+
+        final selectedItemType = await _showDialog(context, itemType);
         fireStoreService.saveCard(CardModel(
             id: _uuid.v4(),
             createTime: 'asdsad',
@@ -54,7 +59,7 @@ class _AddFormState extends ConsumerState<AddForm> {
             itemCreater: _createrNameController.text,
             itemName: _filmNameController.text,
             itemRate: _currentSliderValue.toInt(),
-            itemType: 'film',
+            itemType: selectedItemType!.name,
             shortTextForItem: _itemSumController.text));
       },
       child: Text(
@@ -143,5 +148,76 @@ class _AddFormState extends ConsumerState<AddForm> {
             borderRadius: BorderRadius.circular(15)),
       ),
     );
+  }
+
+  Future<ItemType?> _showDialog(
+      BuildContext context, ItemType? itemType) async {
+    Completer<ItemType?> _completer = Completer<ItemType?>();
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Seçilen Tür'),
+          content: Container(
+            height: 200,
+            child: StatefulBuilder(
+              builder: (context, setState) => Column(
+                children: [
+                  ListTile(
+                    title: Text('film'),
+                    leading: Radio<ItemType>(
+                      activeColor: Colors.black,
+                      value: ItemType.film,
+                      groupValue: itemType,
+                      onChanged: (value) {
+                        setState(() {
+                          itemType = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('dizi'),
+                    leading: Radio<ItemType>(
+                      activeColor: Colors.black,
+                      value: ItemType.series,
+                      groupValue: itemType,
+                      onChanged: (value) {
+                        setState(() {
+                          itemType = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('kitap'),
+                    leading: Radio<ItemType>(
+                      activeColor: Colors.black,
+                      value: ItemType.book,
+                      groupValue: itemType,
+                      onChanged: (value) {
+                        setState(() {
+                          itemType = value;
+                        });
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _completer.complete(itemType); // Close the dialog
+              },
+              child: Text('TAMAM(TR)'),
+            ),
+          ],
+        );
+      },
+    );
+    return _completer.future;
   }
 }
