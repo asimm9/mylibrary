@@ -52,15 +52,19 @@ class _AddFormState extends ConsumerState<AddForm> {
         ItemType? itemType;
 
         final selectedItemType = await _showDialog(context, itemType);
-        fireStoreService.saveCard(CardModel(
-            id: _uuid.v4(),
-            createTime: 'asdsad',
-            isFavorite: false,
-            itemCreater: _createrNameController.text,
-            itemName: _filmNameController.text,
-            itemRate: _currentSliderValue.toInt(),
-            itemType: selectedItemType!.name,
-            shortTextForItem: _itemSumController.text));
+        if (selectedItemType == null) {
+          print('hataVerdi');
+        } else {
+          fireStoreService.saveCard(CardModel(
+              id: _uuid.v4(),
+              createTime: 'asdsad',
+              isFavorite: false,
+              itemCreater: _createrNameController.text,
+              itemName: _filmNameController.text,
+              itemRate: _currentSliderValue.toInt(),
+              itemType: selectedItemType!.name,
+              shortTextForItem: _itemSumController.text));
+        }
       },
       child: Text(
         'Ekle',
