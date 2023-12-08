@@ -17,11 +17,13 @@ class FavoritesPage extends ConsumerWidget {
     Stream<QuerySnapshot<Map<String, dynamic>>> favoriteCardsStream =
         ref.watch(fireStoreServiceProvider.notifier).getFavoriteList();
     double height = MediaQuery.of(context).size.height;
+    Stream<QuerySnapshot<Map<String, dynamic>>> searchCardsStream =
+        ref.watch(fireStoreServiceProvider).favoriteCardStream;
     return Column(
       children: [
-        _searchField(height, context),
+        _searchField(height, context, ref),
         Padding(padding: EdgeInsets.all(height * 0.018)),
-        _itemListField(height, favoriteCardsStream, context),
+        _itemListField(height, favoriteCardsStream, searchCardsStream, context),
         Padding(padding: EdgeInsets.all(height * 0.008)),
         Text(LocaleKeys.favoritePage_swipeLeftToRemoveFromFavorites.locale)
       ],
@@ -31,6 +33,7 @@ class FavoritesPage extends ConsumerWidget {
   Container _itemListField(
       double height,
       Stream<QuerySnapshot<Map<String, dynamic>>> favoriteCardsStream,
+      Stream<QuerySnapshot<Map<String, dynamic>>> searchCardsStream,
       BuildContext context) {
     return Container(
         padding: EdgeInsets.symmetric(
@@ -44,7 +47,9 @@ class FavoritesPage extends ConsumerWidget {
               color: Theme.of(context).colorScheme.tertiary, width: 1.2),
         ),
         child: StreamBuilder(
-          stream: favoriteCardsStream,
+          stream: searchController.text.isEmpty
+              ? favoriteCardsStream
+              : searchCardsStream,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Text(snapshot.error.toString());
@@ -67,7 +72,7 @@ class FavoritesPage extends ConsumerWidget {
         ));
   }
 
-  Container _searchField(double height, BuildContext context) {
+  Container _searchField(double height, BuildContext context, WidgetRef ref) {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
@@ -83,6 +88,9 @@ class FavoritesPage extends ConsumerWidget {
             hintText: 'içerik ismini arayınız',
             suffixIcon: Icon(Icons.tune),
             border: InputBorder.none),
+        onSubmitted: (value) {
+          ref.watch(fireStoreServiceProvider).searchFavoriteCardList(value);
+        },
       ),
     );
   }

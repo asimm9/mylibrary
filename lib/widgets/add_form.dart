@@ -56,12 +56,9 @@ class _AddFormState extends ConsumerState<AddForm> {
               MaterialStatePropertyAll(Theme.of(context).colorScheme.tertiary)),
       onPressed: () async {
         ItemType? itemType;
-
         final selectedItemType = await _showDialog(context, itemType);
-        if (selectedItemType == null) {
-          print('hataVerdi');
-        } else {
-          fireStoreService.saveCard(CardModel(
+        fireStoreService.saveCard(
+          CardModel(
               id: _uuid.v4(),
               createTime: 'asdsad',
               isFavorite: false,
@@ -69,8 +66,8 @@ class _AddFormState extends ConsumerState<AddForm> {
               itemName: _filmNameController.text,
               itemRate: _currentSliderValue.toInt(),
               itemType: selectedItemType!.name,
-              shortTextForItem: _itemSumController.text));
-        }
+              shortTextForItem: _itemSumController.text),
+        );
       },
       child: Text(
         LocaleKeys.addPage_add.locale,

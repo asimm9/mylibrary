@@ -18,7 +18,7 @@ class HomePage extends ConsumerWidget {
     Size size = MediaQuery.of(context).size;
 
     return Column(children: [
-      _searchContainer(size.height, context, size),
+      _searchContainer(size.height, context, size, ref),
       Padding(padding: EdgeInsets.all(size.height * 0.018)),
       _itemListContainer(size.height, ref, context),
     ]);
@@ -209,6 +209,8 @@ class HomePage extends ConsumerWidget {
   Container _itemListContainer(
       double height, WidgetRef ref, BuildContext context) {
     var cardsStream = ref.watch(fireStoreServiceProvider.notifier).getCards();
+    Stream<QuerySnapshot<Map<String, dynamic>>> searchStream =
+        ref.watch(fireStoreServiceProvider).cardStream;
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: height * 0.018, vertical: height * 0.002),
@@ -221,7 +223,7 @@ class HomePage extends ConsumerWidget {
             color: Theme.of(context).colorScheme.tertiary, width: 1.3),
       ),
       child: StreamBuilder(
-        stream: cardsStream,
+        stream: searchController.text.isEmpty ? cardsStream : searchStream,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Center(
@@ -290,7 +292,8 @@ class HomePage extends ConsumerWidget {
     );
   }
 
-  Container _searchContainer(double height, BuildContext context, Size size) {
+  Container _searchContainer(
+      double height, BuildContext context, Size size, WidgetRef ref) {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
@@ -312,6 +315,9 @@ class HomePage extends ConsumerWidget {
               splashColor: Colors.transparent,
             ),
             border: InputBorder.none),
+        onSubmitted: (value) {
+          ref.watch(fireStoreServiceProvider).searchCardList(value);
+        },
       ),
     );
   }
