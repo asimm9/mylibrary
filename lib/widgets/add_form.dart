@@ -68,7 +68,7 @@ class _AddFormState extends ConsumerState<AddForm> {
               itemCreater: _createrNameController.text,
               itemName: _filmNameController.text,
               itemRate: _currentSliderValue.toInt(),
-              itemType: selectedItemType.name,
+              itemType: selectedItemType!.name,
               shortTextForItem: _itemSumController.text));
         }
       },
