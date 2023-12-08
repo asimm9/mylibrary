@@ -21,20 +21,15 @@ class FirebaseAuthService extends ChangeNotifier {
   Future<User> register(String email, String password, String? username) async {
     UserCredential user = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
-
-    _firestore.collection('UserCard').doc(_auth.currentUser!.uid);
-
     Map<String, dynamic> dataMap = {
       'email': email,
       'id': user.user!.uid,
       'username': username
     };
-
     await _firestore
         .collection('UserCard')
         .doc(_auth.currentUser!.uid)
         .set(dataMap);
-
     return user.user!;
   }
 }
