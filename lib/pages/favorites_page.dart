@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mylibrary/localizations/language/locale_keys.g.dart';
+import 'package:mylibrary/localizations/string_extensions.dart';
 import 'package:mylibrary/model/card_model.dart';
 import 'package:mylibrary/widgets/item_card.dart';
 
@@ -21,7 +23,7 @@ class FavoritesPage extends ConsumerWidget {
         Padding(padding: EdgeInsets.all(height * 0.018)),
         _itemListField(height, favoriteCardsStream, context),
         Padding(padding: EdgeInsets.all(height * 0.008)),
-        const Text('Favorilerden Çıkarmak için sola doğru kaydırınız')
+        Text(LocaleKeys.favoritePage_swipeLeftToRemoveFromFavorites.locale)
       ],
     );
   }

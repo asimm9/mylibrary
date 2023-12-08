@@ -1,0 +1,56 @@
+{
+  "login_register":{
+    "logIn":"Log In",
+    "email":"Email",
+    "password":"Password",
+    "dontHaveAnAccount":"Don't have an account",
+    "signUp":"Sign Up",
+    "forgotPassword":"Forgot Password?",
+    "signIn":"Sign In",
+    "or":"OR",
+    "continueWithGoogle":"Continue with Google",
+
+    "register":"Register",
+    "user_name":"User Name",
+    "confirmPassword":"Confirm Password",
+    "alreadyYouHaveAnAccount":"Already you have an account?"
+  },
+  "homePage":{
+    "helpDialog":{
+      "help":"Help",
+      "toGetDetailedView":"To obtain a detailed look, press on top of the card you want",
+      "contentYouWantToSearch":"Write the content you want to search in the search section",
+      "swipeToRemoveFromFavorites":"Slide to remove it from favorites",
+      "close":"Close"
+    },
+    "popUpMenu":{
+      "darkMode":"Dark mode",
+      "about":"About",
+      "logOut":"Log out"
+  },
+    "searchContent":"Search the content",
+    "filter":{
+      "type":"Type",
+      "Rate":"Evaluation",
+      "filmName":"Film name",
+      "seriesName":"Series name",
+      "bookName":"Book name",
+      "clean":"Clean",
+      "filter":"Filters"
+    }
+  },
+  "addPage":{
+    "contentType":"Content type",
+    "writerOrDirectorName":"Author or director name",
+    "mentionAboutTheContent":"Briefly talk about content",
+    "add":"Add"
+  },
+  "contentType":{
+    "film":"film",
+    "series":"Series",
+    "book":"Book"
+  },
+  "favoritePage":{
+    "swipeLeftToRemoveFromFavorites":"Scroll to the left to remove from favorites"
+  }
+  }

@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mylibrary/companants/text_style.dart';
+import 'package:mylibrary/localizations/language/locale_keys.g.dart';
+import 'package:mylibrary/localizations/string_extensions.dart';
 import 'package:mylibrary/widgets/my_button.dart';
 import 'package:mylibrary/providers/all_providers.dart';
 
@@ -53,7 +55,7 @@ class RegisterPage extends ConsumerWidget {
                           userNameController.text);
                     }
                   },
-                  text: 'Sign Up',
+                  text: LocaleKeys.login_register_signUp.locale,
                 ),
               ],
             ),
@@ -65,7 +67,7 @@ class RegisterPage extends ConsumerWidget {
 
   Text _registerText() {
     return Text(
-      'Register',
+      LocaleKeys.login_register_register.locale,
       style: loginPageTextStyle,
     );
   }
@@ -79,7 +81,7 @@ class RegisterPage extends ConsumerWidget {
           fillColor: Colors.white,
           filled: true,
           contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-          labelText: 'User name',
+          labelText: LocaleKeys.login_register_user_name.locale,
           labelStyle: TextStyle(
             height: 1.5,
             color: Colors.grey.shade600,
@@ -108,7 +110,7 @@ class RegisterPage extends ConsumerWidget {
           fillColor: Colors.white,
           filled: true,
           contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-          labelText: ' Email',
+          labelText: LocaleKeys.login_register_email.locale,
           labelStyle: TextStyle(
             height: 1.5,
             color: Colors.grey.shade600,
@@ -143,7 +145,7 @@ class RegisterPage extends ConsumerWidget {
           fillColor: Colors.white,
           filled: true,
           contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-          labelText: ' Password',
+          labelText: LocaleKeys.login_register_password.locale,
           labelStyle: TextStyle(
             height: 1.5,
             color: Colors.grey.shade600,
@@ -179,7 +181,7 @@ class RegisterPage extends ConsumerWidget {
           fillColor: Colors.white,
           filled: true,
           contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-          labelText: 'Confirm Password',
+          labelText: LocaleKeys.login_register_confirmPassword.locale,
           labelStyle: TextStyle(
             height: 1.5,
             color: Colors.grey.shade600,
@@ -219,9 +221,9 @@ class RegisterPage extends ConsumerWidget {
               overlayColor: MaterialStateProperty.all(Colors.transparent),
             ),
             onPressed: () => onPressed,
-            child: const Text(
-              'Already you have an account',
-              style: TextStyle(
+            child: Text(
+              LocaleKeys.login_register_alreadyYouHaveAnAccount.locale,
+              style: const TextStyle(
                 color: Colors.black,
               ),
             ),
@@ -234,9 +236,9 @@ class RegisterPage extends ConsumerWidget {
                 const EdgeInsets.only(right: 20),
               ),
             ),
-            child: const Text(
-              'Sign In',
-              style: TextStyle(color: Colors.blueAccent),
+            child: Text(
+              LocaleKeys.login_register_signIn.locale,
+              style: const TextStyle(color: Colors.blueAccent),
             ),
           )
         ],
