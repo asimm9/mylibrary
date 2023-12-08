@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mylibrary/companants/rate_star.dart';
 import 'package:mylibrary/companants/text_style.dart';
+import 'package:mylibrary/localizations/language/locale_keys.g.dart';
+import 'package:mylibrary/localizations/string_extensions.dart';
 import 'package:mylibrary/model/card_model.dart';
 import 'package:mylibrary/providers/all_providers.dart';
 import 'package:mylibrary/widgets/item_card.dart';
@@ -43,7 +45,7 @@ class HomePage extends ConsumerWidget {
                             child: Column(
                               children: [
                                 Text(
-                                  'Type',
+                                  LocaleKeys.homePage_filter_type.locale,
                                   style: filterTextStyle,
                                 ),
                                 SizedBox(height: size.height * 0.02),
@@ -54,9 +56,9 @@ class HomePage extends ConsumerWidget {
                                   onChanged: (value) {
                                     setState(() => typeList[0] = value!);
                                   },
-                                  title: const Text(
-                                    'Film Adı',
-                                    style: TextStyle(fontSize: 15),
+                                  title: Text(
+                                    LocaleKeys.homePage_filter_filmName.locale,
+                                    style: const TextStyle(fontSize: 15),
                                   ),
                                   controlAffinity:
                                       ListTileControlAffinity.leading,
@@ -68,9 +70,10 @@ class HomePage extends ConsumerWidget {
                                   onChanged: (value) {
                                     setState(() => typeList[1] = value!);
                                   },
-                                  title: const Text(
-                                    'Dizi Adı',
-                                    style: TextStyle(fontSize: 15),
+                                  title: Text(
+                                    LocaleKeys
+                                        .homePage_filter_seriesName.locale,
+                                    style: const TextStyle(fontSize: 15),
                                   ),
                                   controlAffinity:
                                       ListTileControlAffinity.leading,
@@ -82,9 +85,9 @@ class HomePage extends ConsumerWidget {
                                   onChanged: (value) {
                                     setState(() => typeList[2] = value!);
                                   },
-                                  title: const Text(
-                                    'Kitap Adı',
-                                    style: TextStyle(fontSize: 15),
+                                  title: Text(
+                                    LocaleKeys.homePage_filter_bookName.locale,
+                                    style: const TextStyle(fontSize: 15),
                                   ),
                                   controlAffinity:
                                       ListTileControlAffinity.leading,
@@ -102,7 +105,7 @@ class HomePage extends ConsumerWidget {
                             child: Column(
                               children: [
                                 Text(
-                                  'Rate',
+                                  LocaleKeys.homePage_filter_Rate.locale,
                                   style: filterTextStyle,
                                 ),
                                 const SizedBox(height: 10),
@@ -172,7 +175,7 @@ class HomePage extends ConsumerWidget {
                       children: [
                         Expanded(
                           child: MyButton(
-                            text: 'Temizle',
+                            text: LocaleKeys.homePage_filter_clean.locale,
                             onTap: () {
                               setState(() => typeList = [false, false, false]);
                             },
@@ -183,7 +186,7 @@ class HomePage extends ConsumerWidget {
                         const SizedBox(width: 10),
                         Expanded(
                           child: MyButton(
-                            text: 'Filtrele',
+                            text: LocaleKeys.homePage_filter_filter.locale,
                             onTap: () {
                               setState(() => typeList = [false, false, false]);
                             },
@@ -243,11 +246,18 @@ class HomePage extends ConsumerWidget {
                 return Dismissible(
                   key: ObjectKey(item),
                   background: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(20)),
                     alignment: Alignment.centerRight,
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    color: Colors.red,
-                    child: Icon(Icons.delete_forever),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Icon(
+                      Icons.delete_forever,
+                      color: Theme.of(context).colorScheme.primary,
+                      size: 30,
+                    ),
                   ),
+                  behavior: HitTestBehavior.translucent,
                   direction: DismissDirection.endToStart,
                   onDismissed: (direction) {
                     ref.watch(fireStoreServiceProvider).deleteCard(
@@ -256,8 +266,13 @@ class HomePage extends ConsumerWidget {
                           ),
                         );
                     if (direction == DismissDirection.endToStart) {
-                      SnackBar(
-                        content: const Text('Kart silindi !!!'),
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Kart silindi!!!'),
+                          duration: Duration(seconds: 1),
+                          dismissDirection: DismissDirection.up,
+                          behavior: SnackBarBehavior.floating,
+                        ),
                       );
                     }
                   },
@@ -288,7 +303,7 @@ class HomePage extends ConsumerWidget {
         controller: searchController,
         decoration: InputDecoration(
             prefixIcon: const Icon(Icons.search),
-            hintText: 'içerik ismini arayınız',
+            hintText: LocaleKeys.homePage_searchContent.locale,
             suffixIcon: IconButton(
               onPressed: () {
                 _searchFilter(size, context);

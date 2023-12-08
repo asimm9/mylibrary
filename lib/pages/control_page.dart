@@ -1,9 +1,15 @@
+import 'dart:math';
+
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mylibrary/companants/app_constans.dart';
 import 'package:mylibrary/companants/text_style.dart';
+import 'package:mylibrary/localizations/language/locale_keys.g.dart';
+import 'package:mylibrary/localizations/string_extensions.dart';
 import 'package:mylibrary/pages/add_page.dart';
 import 'package:mylibrary/pages/favorites_page.dart';
 import 'package:mylibrary/pages/home_page.dart';
@@ -77,7 +83,10 @@ class _ControlPageState extends ConsumerState<ControlPage> {
           color: Theme.of(context).colorScheme.tertiary,
         ),
       ),
-      actions: [_popUpMenuButton(authProvider, themeModeState)],
+      actions: [
+        _changeLanguage(),
+        _popUpMenuButton(authProvider, themeModeState)
+      ],
     );
   }
 
@@ -90,49 +99,67 @@ class _ControlPageState extends ConsumerState<ControlPage> {
             style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.tertiary),
             onPressed: () => Navigator.pop(context),
-            child: const Text(
-              'Kapat',
+            child: Text(
+              LocaleKeys.homePage_helpDialog_close.locale,
               textAlign: TextAlign.center,
             ),
           ),
         ],
         insetPadding: EdgeInsets.symmetric(
             vertical: size.height * 0.25, horizontal: size.width * 0.06),
-        title: const Text('Yardım'),
-        content: const Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        title: Text(
+          LocaleKeys.homePage_helpDialog_help.locale,
+        ),
+        content:
+            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  Icon(Icons.arrow_forward),
-                  SizedBox(width: 5),
-                  Flexible(
-                    child: Text(
-                      'Detaylı görünüm elde etmek için istediğiniz kartın üstüne basınız',
-                    ),
-                  ),
-                ],
+              const Icon(Icons.arrow_forward),
+              const SizedBox(width: 5),
+              Flexible(
+                child: Text(
+                  LocaleKeys.homePage_helpDialog_toGetDetailedView.locale,
+                ),
               ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Icon(Icons.arrow_forward),
-                  SizedBox(width: 5),
-                  Flexible(
-                    child: Text(
-                        'Aratmak istediğiniz içeriği arama kısmına yazınız'),
-                  ),
-                ],
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              const Icon(Icons.arrow_forward),
+              const SizedBox(width: 5),
+              Flexible(
+                child: Text(LocaleKeys
+                    .homePage_helpDialog_contentYouWantToSearch.locale),
               ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Icon(Icons.arrow_forward),
-                  SizedBox(width: 5),
-                  Flexible(child: Text('Favorilerden çıkarmak için kaydırın')),
-                ],
-              ),
-            ]),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              const Icon(Icons.arrow_forward),
+              const SizedBox(width: 5),
+              Flexible(
+                  child: Text(LocaleKeys
+                      .homePage_helpDialog_swipeToRemoveFromFavorites.locale)),
+            ],
+          ),
+        ]),
+      ),
+    );
+  }
+
+  IconButton _changeLanguage() {
+    return IconButton(
+      onPressed: () {
+        int selectedIndex = Random().nextInt(AppConstant.SUPPORTED_LANG.length);
+        context.setLocale(AppConstant.SUPPORTED_LANG[selectedIndex]);
+      },
+      icon: CircleAvatar(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+        radius: 12,
+        child: Text(context.locale.languageCode),
       ),
     );
   }
@@ -140,7 +167,8 @@ class _ControlPageState extends ConsumerState<ControlPage> {
   PopupMenuButton<dynamic> _popUpMenuButton(
       FirebaseAuthService authProvider, ThemeProvider themeModeProvider) {
     return PopupMenuButton(
-      icon: Icon(Icons.menu, color: Theme.of(context).colorScheme.tertiary),
+      icon:
+          Icon(Icons.more_vert, color: Theme.of(context).colorScheme.tertiary),
       onSelected: (value) {
         if (value == 3) {
           authProvider.signOut();
@@ -158,7 +186,9 @@ class _ControlPageState extends ConsumerState<ControlPage> {
                   Icon(Icons.dark_mode,
                       color: Theme.of(context).colorScheme.tertiary),
                   const SizedBox(width: 10),
-                  const Text('Karanlık mod')
+                  Text(
+                    LocaleKeys.homePage_popUpMenu_darkMode.locale,
+                  )
                 ],
               )),
           PopupMenuItem(
@@ -168,19 +198,22 @@ class _ControlPageState extends ConsumerState<ControlPage> {
                   Icon(Icons.info,
                       color: Theme.of(context).colorScheme.tertiary),
                   const SizedBox(width: 10),
-                  const Text('Hakkında')
+                  Text(LocaleKeys.homePage_popUpMenu_about.locale)
                 ],
               )),
           PopupMenuItem(
-              value: 3,
-              child: Row(
-                children: [
-                  Icon(Icons.logout,
-                      color: Theme.of(context).colorScheme.tertiary),
-                  const SizedBox(width: 10),
-                  const Text('Çıkış yap')
-                ],
-              ))
+            value: 3,
+            child: Row(
+              children: [
+                Icon(Icons.logout,
+                    color: Theme.of(context).colorScheme.tertiary),
+                const SizedBox(width: 10),
+                Text(
+                  LocaleKeys.homePage_popUpMenu_logOut.locale,
+                )
+              ],
+            ),
+          ),
         ];
       },
     );

@@ -120,7 +120,7 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
                 Icons.star,
                 color: Colors.yellow,
               ),
-              SizedBox(width: 5),
+              const SizedBox(width: 5),
               Text(
                 widget.cardModel.itemRate.toString(),
               ),

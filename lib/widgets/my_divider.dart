@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mylibrary/companants/text_style.dart';
+import 'package:mylibrary/localizations/language/locale_keys.g.dart';
+import 'package:mylibrary/localizations/string_extensions.dart';
 
 class MyDivider extends StatelessWidget {
   const MyDivider({super.key});
@@ -18,7 +20,8 @@ class MyDivider extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Text('OR', style: dividerTextStyle),
+          child: Text(LocaleKeys.login_register_or.locale,
+              style: dividerTextStyle),
         ),
         const Expanded(
           child: Divider(

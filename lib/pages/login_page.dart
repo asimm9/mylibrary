@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mylibrary/companants/text_style.dart';
+import 'package:mylibrary/localizations/language/locale_keys.g.dart';
+import 'package:mylibrary/localizations/string_extensions.dart';
 import 'package:mylibrary/widgets/my_button.dart';
 import 'package:mylibrary/widgets/my_divider.dart';
 import 'package:mylibrary/providers/all_providers.dart';
@@ -38,14 +40,14 @@ class LoginPage extends ConsumerWidget {
                       .watch(authenticationProvider.notifier)
                       .signIn(emailController.text, passwordController.text);
                 },
-                text: 'Sign In',
+                text: LocaleKeys.login_register_signIn.locale,
               ),
               const SizedBox(height: 15),
               const MyDivider(),
               const SizedBox(height: 15),
               MyButton(
                 onTap: () {},
-                text: 'Continue with Google',
+                text: LocaleKeys.login_register_continueWithGoogle.locale,
                 icon: Icons.mail,
               ),
             ],
@@ -61,10 +63,10 @@ class LoginPage extends ConsumerWidget {
       children: [
         Row(
           children: [
-            const Text(
-              'Don’t have an account?',
-              style: TextStyle(
-                fontSize: 12,
+            Text(
+              LocaleKeys.login_register_alreadyYouHaveAnAccount.locale,
+              style: const TextStyle(
+                fontSize: 11,
                 color: Colors.black,
               ),
             ),
@@ -76,23 +78,25 @@ class LoginPage extends ConsumerWidget {
                 ),
               ),
               onPressed: onPressed,
-              child: const Text(
-                'Sign Up',
-                style: TextStyle(fontSize: 12, color: Colors.blueAccent),
+              child: Text(
+                LocaleKeys.login_register_signUp.locale,
+                style: const TextStyle(fontSize: 12, color: Colors.blueAccent),
               ),
             ),
           ],
         ),
-        TextButton(
-          style: ButtonStyle(
-            overlayColor: MaterialStateProperty.all(Colors.transparent),
-          ),
-          onPressed: () {},
-          child: const Text(
-            'Forgot Password?',
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.black,
+        Expanded(
+          child: TextButton(
+            style: ButtonStyle(
+              overlayColor: MaterialStateProperty.all(Colors.transparent),
+            ),
+            onPressed: () {},
+            child: Text(
+              LocaleKeys.login_register_forgotPassword.locale,
+              style: const TextStyle(
+                fontSize: 11,
+                color: Colors.black,
+              ),
             ),
           ),
         ),
@@ -109,7 +113,7 @@ class LoginPage extends ConsumerWidget {
           fillColor: Colors.white,
           filled: true,
           contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-          labelText: ' Password',
+          labelText: LocaleKeys.login_register_password.locale,
           labelStyle: TextStyle(
             height: 1.5,
             color: Colors.grey.shade600,
@@ -146,7 +150,7 @@ class LoginPage extends ConsumerWidget {
           fillColor: Colors.white,
           filled: true,
           contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-          labelText: ' Email',
+          labelText: LocaleKeys.login_register_email.locale,
           labelStyle: TextStyle(
             height: 1.5,
             color: Colors.grey.shade600,
@@ -174,7 +178,7 @@ class LoginPage extends ConsumerWidget {
 
   Text _loginText() {
     return Text(
-      'LogIn',
+      LocaleKeys.login_register_logIn.locale,
       style: loginPageTextStyle,
     );
   }

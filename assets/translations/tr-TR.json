@@ -1,0 +1,57 @@
+
+{
+  "login_register":{
+    "logIn":"Oturum aç",
+    "email":"E-posta",
+    "password":"Parola",
+    "dontHaveAnAccount":"Henüz hesabınız yok mu?",
+    "signUp":"Kayıt Ol",
+    "forgotPassword":"Parolanızı mı unuttunuz?",
+    "signIn":"Oturum aç",
+    "or":"Ya da",
+    "continueWithGoogle":"Google ile giriş yap",
+
+    "register":"Kayıt Ol",
+    "user_name":"Kullanıcı Adı",
+    "confirmPassword":"Parolayı Onaylayın",
+    "alreadyYouHaveAnAccount":"Zaten bir hesabınız mı var?"
+  },
+  "homePage":{
+    "helpDialog":{
+      "help":"Yardım",
+      "toGetDetailedView":"Detaylı görünüm elde etmek için istediğiniz kartın üstüne basınız",
+      "contentYouWantToSearch":"Aratmak istediğiniz içeriği arama kısmına yazınız",
+      "swipeToRemoveFromFavorites":"Favorilerden çıkarmak için kaydırınız",
+      "close":"Kapat"
+    },
+    "popUpMenu":{
+      "darkMode":"Karanlık mod",
+      "about":"Hakkında",
+      "logOut":"Çıkış yap"
+  },
+    "searchContent":"İçerik adını arayınız",
+    "filter":{
+      "type":"Tür",
+      "Rate":"Değerlendirme",
+      "filmName":"Film Adı",
+      "seriesName":"Dizi Adı",
+      "bookName":"Kitap Adı",
+      "clean":"Temizle",
+      "filter":"Filtrele"
+    }
+  },
+  "addPage":{
+    "contentType":"İçerik türü",
+    "writerOrDirectorName":"Yazar veya yönetmen adı",
+    "mentionAboutTheContent":"İçerikten kısaca bahsedin",
+    "add":"Ekle"
+  },
+  "contentType":{
+    "film":"Film",
+    "series":"Dizi",
+    "book":"Kitap"
+  },
+  "favoritePage":{
+    "swipeLeftToRemoveFromFavorites":"Favorilerden çıkarmak için sola doğru kaydırınız"
+  }
+  }

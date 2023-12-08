@@ -10,7 +10,7 @@ class ThemeModeClass {
     colorScheme: ColorScheme.light(
         background: backgroundColor,
         primary: Colors.white,
-        secondary: Colors.grey.shade200,
+        secondary: Colors.grey.shade300,
         tertiary: Colors.black),
   );
   static ThemeData darkMode = ThemeData(
