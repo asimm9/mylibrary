@@ -3,7 +3,7 @@
   "login_register":{
     "logIn":"Oturum aç",
     "email":"E-posta",
-    "password":"Parola",
+    "password":"Şifre",
     "dontHaveAnAccount":"Henüz hesabınız yok mu?",
     "signUp":"Kayıt Ol",
     "forgotPassword":"Parolanızı mı unuttunuz?",
@@ -13,7 +13,7 @@
 
     "register":"Kayıt Ol",
     "user_name":"Kullanıcı Adı",
-    "confirmPassword":"Parolayı Onaylayın",
+    "confirmPassword":"Şifreyi Onaylayın",
     "alreadyYouHaveAnAccount":"Zaten bir hesabınız mı var?"
   },
   "homePage":{

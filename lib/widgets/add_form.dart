@@ -1,7 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mylibrary/companants/text_style.dart';
@@ -25,6 +23,7 @@ class _AddFormState extends ConsumerState<AddForm> {
   final TextEditingController _itemSumController = TextEditingController();
   double _currentSliderValue = 0;
   final Uuid _uuid = const Uuid();
+  ItemType? selectedItemType;
 
   @override
   Widget build(BuildContext context) {
@@ -48,15 +47,19 @@ class _AddFormState extends ConsumerState<AddForm> {
     );
   }
 
-  ElevatedButton _customElevatedButton(FireStoreService fireStoreService) {
+  ElevatedButton _customElevatedButton(
+    FireStoreService fireStoreService,
+  ) {
     return ElevatedButton(
       style: ButtonStyle(
           fixedSize: const MaterialStatePropertyAll(Size(150, 10)),
           backgroundColor:
               MaterialStatePropertyAll(Theme.of(context).colorScheme.tertiary)),
       onPressed: () async {
-        ItemType? itemType;
-        final selectedItemType = await _showDialog(context, itemType);
+        if (selectedItemType == null) {
+          controlType();
+          return;
+        }
         fireStoreService.saveCard(
           CardModel(
               id: _uuid.v4(),
@@ -68,6 +71,7 @@ class _AddFormState extends ConsumerState<AddForm> {
               itemType: selectedItemType!.name,
               shortTextForItem: _itemSumController.text),
         );
+        selectedItemType = null;
       },
       child: Text(
         LocaleKeys.addPage_add.locale,
@@ -76,22 +80,15 @@ class _AddFormState extends ConsumerState<AddForm> {
     );
   }
 
-  Future<ItemType?> controlType(ItemType? itemType) async {
-    var selectedItemType = await _showDialog(context, itemType);
-    if (selectedItemType == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Lütfen bir tip seçiniz!!!'),
-          duration: Duration(seconds: 2),
-          dismissDirection: DismissDirection.up,
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-    }
-    while (selectedItemType == null) {
-      selectedItemType = await _showDialog(context, itemType);
-    }
-    return selectedItemType;
+  void controlType() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Lütfen bir tip seçiniz!!!'),
+        duration: Duration(seconds: 2),
+        dismissDirection: DismissDirection.up,
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
   }
 
   Slider _customSlider() {
@@ -193,129 +190,53 @@ class _AddFormState extends ConsumerState<AddForm> {
     );
   }
 
-  Future<ItemType?> _showDialog(
-      BuildContext context, ItemType? itemType) async {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Seçilen Tür'),
-          content: SizedBox(
-            height: 200,
-            child: StatefulBuilder(
-              builder: (context, setState) => Column(
-                children: [
-                  ListTile(
-                    title: const Text('film'),
-                    leading: Radio<ItemType>(
-                      activeColor: Colors.black,
-                      value: ItemType.film,
-                      groupValue: itemType,
-                      onChanged: (value) {
-                        setState(() {
-                          itemType = value;
-                        });
-                      },
-                    ),
-                  ),
-                  ListTile(
-                    title: const Text('dizi'),
-                    leading: Radio<ItemType>(
-                      activeColor: Colors.black,
-                      value: ItemType.series,
-                      groupValue: itemType,
-                      onChanged: (value) {
-                        setState(() {
-                          itemType = value;
-                        });
-                      },
-                    ),
-                  ),
-                  ListTile(
-                    title: const Text('kitap'),
-                    leading: Radio<ItemType>(
-                      activeColor: Colors.black,
-                      value: ItemType.book,
-                      groupValue: itemType,
-                      onChanged: (value) {
-                        setState(() {
-                          itemType = value;
-                        });
-                      },
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          actions: [
-            ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(
-                      Theme.of(context).colorScheme.tertiary)),
-              onPressed: () {
-                Navigator.of(context).pop(itemType);
-              },
-              child: const Text('TAMAM(TR)'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   _selectedItemType(ItemType? itemType) {
     return StatefulBuilder(
       builder: (context, setState) => Row(
         children: [
           Expanded(
-            child: ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: const Text('film'),
-              leading: Radio<ItemType>(
-                activeColor: Colors.black,
-                value: ItemType.film,
-                groupValue: itemType,
-                onChanged: (value) {
-                  setState(() {
-                    itemType = value;
-                  });
-                },
-              ),
+            child: RadioListTile<ItemType>(
+              title: Text('Film'),
+              activeColor: Colors.black,
+              value: ItemType.film,
+              groupValue: itemType,
+              onChanged: (value) {
+                setState(() {
+                  itemType = value;
+                  selectedItemType = itemType;
+                });
+              },
             ),
           ),
           Expanded(
-            child: ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: const Text('dizi'),
-              leading: Radio<ItemType>(
-                activeColor: Colors.black,
-                value: ItemType.series,
-                groupValue: itemType,
-                onChanged: (value) {
-                  setState(() {
-                    itemType = value;
-                  });
-                },
-              ),
+            child: RadioListTile<ItemType>(
+              title: Text('Dizi'),
+              activeColor: Colors.black,
+              value: ItemType.series,
+              groupValue: itemType,
+              onChanged: (value) {
+                setState(() {
+                  itemType = value;
+                  selectedItemType = itemType;
+                });
+              },
             ),
           ),
           Expanded(
-            child: ListTile(
+            child: RadioListTile<ItemType>(
               contentPadding: EdgeInsets.zero,
-              title: const Text('kitap'),
-              leading: Radio<ItemType>(
-                activeColor: Colors.black,
-                value: ItemType.book,
-                groupValue: itemType,
-                onChanged: (value) {
-                  setState(() {
-                    itemType = value;
-                  });
-                },
-              ),
+              title: Text('Kitap'),
+              activeColor: Colors.black,
+              value: ItemType.book,
+              groupValue: itemType,
+              onChanged: (value) {
+                setState(() {
+                  itemType = value;
+                  selectedItemType = itemType;
+                });
+              },
             ),
-          )
+          ),
         ],
       ),
     );
