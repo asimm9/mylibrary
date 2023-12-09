@@ -20,7 +20,7 @@ class ItemCard extends StatelessWidget {
         elevation: 3,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
-          side: BorderSide(color: Colors.green.shade400, width: 2.5),
+          side: BorderSide(color: colorControl(), width: 2.5),
         ),
         child: ListTile(
           shape: RoundedRectangleBorder(
@@ -42,5 +42,15 @@ class ItemCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color colorControl() {
+    if (cardModel.itemType == 'series') {
+      return Colors.pink.shade400;
+    } else if (cardModel.itemType == 'book') {
+      return Colors.green.shade400;
+    } else {
+      return Colors.orange.shade400;
+    }
   }
 }
