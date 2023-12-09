@@ -37,7 +37,7 @@ class MyButton extends ConsumerWidget {
                   Icon(
                     icon,
                     size: 30,
-                    color: Colors.white,
+                    color: Colors.blueGrey,
                   ),
                   const SizedBox(width: 10),
                   Text(

@@ -6,7 +6,7 @@ TextStyle myButtonTextStyle = const TextStyle(
     fontFamily: 'Roboto',
     fontSize: 22,
     fontWeight: FontWeight.w600,
-    color: Colors.white);
+    color: Colors.blueGrey);
 TextStyle dividerTextStyle = const TextStyle(
     color: Colors.grey, fontSize: 15, fontWeight: FontWeight.w500);
 TextStyle addButtonTextStyle =

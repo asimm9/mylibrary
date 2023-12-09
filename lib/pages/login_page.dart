@@ -29,12 +29,13 @@ class LoginPage extends ConsumerWidget {
             children: [
               _loginText(),
               const SizedBox(height: 45),
-              _email_form_field(size),
+              _email_form_field(size, context),
               const SizedBox(height: 15),
-              _passwordField(size),
-              _createNewAccount(onPressed),
+              _passwordField(size, context),
+              _createNewAccount(onPressed, context),
               const SizedBox(height: 15),
               MyButton(
+                mycolor: Theme.of(context).colorScheme.tertiary,
                 onTap: () {
                   ref
                       .watch(authenticationProvider.notifier)
@@ -46,6 +47,7 @@ class LoginPage extends ConsumerWidget {
               const MyDivider(),
               const SizedBox(height: 15),
               MyButton(
+                mycolor: Theme.of(context).colorScheme.tertiary,
                 onTap: () {},
                 text: LocaleKeys.login_register_continueWithGoogle.locale,
                 icon: Icons.mail,
@@ -57,7 +59,7 @@ class LoginPage extends ConsumerWidget {
     );
   }
 
-  _createNewAccount(VoidCallback onPressed) {
+  _createNewAccount(VoidCallback onPressed, BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -65,17 +67,14 @@ class LoginPage extends ConsumerWidget {
           children: [
             Text(
               LocaleKeys.login_register_alreadyYouHaveAnAccount.locale,
-              style: const TextStyle(
-                fontSize: 11,
-                color: Colors.black,
-              ),
+              style: TextStyle(
+                  fontSize: 11, color: Theme.of(context).colorScheme.tertiary),
             ),
             TextButton(
               style: ButtonStyle(
                 overlayColor: MaterialStateProperty.all(Colors.transparent),
-                padding: MaterialStateProperty.all(
-                  const EdgeInsets.only(right: 15),
-                ),
+                padding:
+                    MaterialStateProperty.all(const EdgeInsets.only(right: 15)),
               ),
               onPressed: onPressed,
               child: Text(
@@ -93,10 +92,8 @@ class LoginPage extends ConsumerWidget {
             onPressed: () {},
             child: Text(
               LocaleKeys.login_register_forgotPassword.locale,
-              style: const TextStyle(
-                fontSize: 11,
-                color: Colors.black,
-              ),
+              style: TextStyle(
+                  fontSize: 11, color: Theme.of(context).colorScheme.tertiary),
             ),
           ),
         ),
@@ -104,7 +101,7 @@ class LoginPage extends ConsumerWidget {
     );
   }
 
-  SizedBox _passwordField(Size size) {
+  SizedBox _passwordField(Size size, BuildContext context) {
     return SizedBox(
       height: size.height * 0.1,
       child: TextFormField(
@@ -116,17 +113,13 @@ class LoginPage extends ConsumerWidget {
           labelText: LocaleKeys.login_register_password.locale,
           labelStyle: TextStyle(
             height: 1.5,
-            color: Colors.grey.shade600,
+            color: Theme.of(context).colorScheme.scrim,
           ),
           enabledBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
           focusedBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
         ),
         maxLength: 6,
@@ -141,7 +134,7 @@ class LoginPage extends ConsumerWidget {
     );
   }
 
-  SizedBox _email_form_field(Size size) {
+  SizedBox _email_form_field(Size size, BuildContext context) {
     return SizedBox(
       height: size.height * 0.07,
       child: TextFormField(
@@ -153,17 +146,13 @@ class LoginPage extends ConsumerWidget {
           labelText: LocaleKeys.login_register_email.locale,
           labelStyle: TextStyle(
             height: 1.5,
-            color: Colors.grey.shade600,
+            color: Theme.of(context).colorScheme.scrim,
           ),
           enabledBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
           focusedBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
         ),
         validator: (value) {

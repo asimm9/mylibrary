@@ -11,7 +11,8 @@ class ThemeModeClass {
         background: backgroundColor,
         primary: Colors.white,
         secondary: Colors.grey.shade300,
-        tertiary: Colors.black),
+        tertiary: Colors.black,
+        scrim: Colors.grey.shade500),
   );
   static ThemeData darkMode = ThemeData(
     appBarTheme:
@@ -22,6 +23,7 @@ class ThemeModeClass {
         background: Colors.black,
         primary: Colors.grey.shade900,
         secondary: Colors.grey.shade700,
-        tertiary: Colors.white),
+        tertiary: Colors.white,
+        scrim: Colors.grey.shade600),
   );
 }

@@ -44,6 +44,7 @@ class RegisterPage extends ConsumerWidget {
                 _signInAccount(showPageProvider, context, onPressed),
                 const SizedBox(height: 15),
                 MyButton(
+                  mycolor: Theme.of(context).colorScheme.tertiary,
                   onTap: () {
                     if (passwordController.text !=
                         confirmPasswordController.text) {
@@ -87,14 +88,10 @@ class RegisterPage extends ConsumerWidget {
             color: Colors.grey.shade600,
           ),
           enabledBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
           focusedBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
         ),
       ),
@@ -116,14 +113,10 @@ class RegisterPage extends ConsumerWidget {
             color: Colors.grey.shade600,
           ),
           enabledBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
           focusedBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
         ),
         validator: (value) {
@@ -223,8 +216,8 @@ class RegisterPage extends ConsumerWidget {
             onPressed: () => onPressed,
             child: Text(
               LocaleKeys.login_register_alreadyYouHaveAnAccount.locale,
-              style: const TextStyle(
-                color: Colors.black,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.tertiary,
               ),
             ),
           ),
