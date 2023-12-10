@@ -1,9 +1,10 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mylibrary/companants/text_style.dart';
 import 'package:mylibrary/localizations/language/locale_keys.g.dart';
+import 'package:mylibrary/localizations/locale_text.dart';
 import 'package:mylibrary/localizations/string_extensions.dart';
 import 'package:mylibrary/model/card_model.dart';
 import 'package:mylibrary/providers/all_providers.dart';
@@ -23,7 +24,7 @@ class _AddFormState extends ConsumerState<AddForm> {
   final TextEditingController _itemSumController = TextEditingController();
   double _currentSliderValue = 0;
   final Uuid _uuid = const Uuid();
-  ItemType? selectedItemType;
+  //ItemType? selectedItemType;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +57,7 @@ class _AddFormState extends ConsumerState<AddForm> {
           backgroundColor:
               MaterialStatePropertyAll(Theme.of(context).colorScheme.tertiary)),
       onPressed: () async {
+        var selectedItemType = ref.read(selectedItemTypeProvider);
         if (selectedItemType == null) {
           controlType();
           return;
@@ -191,12 +193,14 @@ class _AddFormState extends ConsumerState<AddForm> {
   }
 
   _selectedItemType(ItemType? itemType) {
+    var selectedItemType = ref.read(selectedItemTypeProvider);
     return StatefulBuilder(
       builder: (context, setState) => Row(
         children: [
           Expanded(
             child: RadioListTile<ItemType>(
-              title: Text('Film'),
+              contentPadding: EdgeInsets.zero,
+              title: LocaleText(text: LocaleKeys.contentType_film),
               activeColor: Colors.black,
               value: ItemType.film,
               groupValue: itemType,
@@ -210,7 +214,11 @@ class _AddFormState extends ConsumerState<AddForm> {
           ),
           Expanded(
             child: RadioListTile<ItemType>(
-              title: Text('Dizi'),
+              contentPadding: EdgeInsets.zero,
+              title: LocaleText(
+                text: LocaleKeys.contentType_series,
+                textStyle: TextStyle(fontSize: 6),
+              ),
               activeColor: Colors.black,
               value: ItemType.series,
               groupValue: itemType,
@@ -225,7 +233,7 @@ class _AddFormState extends ConsumerState<AddForm> {
           Expanded(
             child: RadioListTile<ItemType>(
               contentPadding: EdgeInsets.zero,
-              title: Text('Kitap'),
+              title: LocaleText(text: LocaleKeys.contentType_book),
               activeColor: Colors.black,
               value: ItemType.book,
               groupValue: itemType,

@@ -21,6 +21,8 @@ class RegisterPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Size size = MediaQuery.of(context).size;
+    TextStyle textFieldTextColor =
+        TextStyle(color: Theme.of(context).colorScheme.primary);
     final showPageProvider = ref.watch(showPageChangeProvider);
 
     return Scaffold(
@@ -35,7 +37,7 @@ class RegisterPage extends ConsumerWidget {
               children: [
                 _registerText(),
                 const SizedBox(height: 45),
-                _userNameField(size),
+                _userNameField(size, textFieldTextColor),
                 const SizedBox(height: 15),
                 _email_form_field(size),
                 const SizedBox(height: 15),
@@ -73,11 +75,12 @@ class RegisterPage extends ConsumerWidget {
     );
   }
 
-  SizedBox _userNameField(Size size) {
+  SizedBox _userNameField(Size size, TextStyle textFieldTextColor) {
     return SizedBox(
       height: size.height * 0.07,
       child: TextFormField(
         controller: userNameController,
+        style: textFieldTextColor,
         decoration: InputDecoration(
           fillColor: Colors.white,
           filled: true,

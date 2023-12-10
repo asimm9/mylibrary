@@ -15,20 +15,22 @@ class HomePage extends ConsumerWidget {
   final TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    List typeList = [false, false, false];
+
     Size size = MediaQuery.of(context).size;
 
     return Column(children: [
-      _searchContainer(size.height, context, size, ref),
+      _searchContainer(size.height, context, size, ref, typeList),
       Padding(padding: EdgeInsets.all(size.height * 0.018)),
-      _itemListContainer(size.height, ref, context),
+      _itemListContainer(size.height, ref, context, typeList),
     ]);
   }
 
-  Future _searchFilter(Size size, BuildContext context) {
+  Future _searchFilter(
+      Size size, BuildContext context, WidgetRef ref, List typeList) {
     return showDialog(
       context: context,
       builder: (context) {
-        List typeList = [false, false, false];
         return Container(
           margin: EdgeInsets.only(
             bottom: size.height * 0.35,
@@ -188,7 +190,15 @@ class HomePage extends ConsumerWidget {
                           child: MyButton(
                             text: LocaleKeys.homePage_filter_filter.locale,
                             onTap: () {
-                              setState(() => typeList = [false, false, false]);
+                              setState(
+                                () {
+                                  typeList = [false, false, false];
+                                  ref
+                                      .watch(fireStoreServiceProvider)
+                                      .filterCardList(
+                                          ref.watch(selectedItemTypeProvider));
+                                },
+                              );
                             },
                             myheight: 0.05,
                             mycolor: Colors.greenAccent,
@@ -207,10 +217,9 @@ class HomePage extends ConsumerWidget {
   }
 
   Container _itemListContainer(
-      double height, WidgetRef ref, BuildContext context) {
-    var cardsStream = ref.watch(fireStoreServiceProvider.notifier).getCards();
-    Stream<QuerySnapshot<Map<String, dynamic>>> searchStream =
-        ref.watch(fireStoreServiceProvider).cardStream;
+      double height, WidgetRef ref, BuildContext context, List typeList) {
+    Stream<QuerySnapshot<Map<String, dynamic>>> filterCardStream =
+        ref.watch(fireStoreServiceProvider).filterCardStream;
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: height * 0.018, vertical: height * 0.002),
@@ -223,7 +232,7 @@ class HomePage extends ConsumerWidget {
             color: Theme.of(context).colorScheme.tertiary, width: 1.3),
       ),
       child: StreamBuilder(
-        stream: searchController.text.isEmpty ? cardsStream : searchStream,
+        stream: controlStramCard(filterCardStream, typeList, ref),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Center(
@@ -292,8 +301,24 @@ class HomePage extends ConsumerWidget {
     );
   }
 
-  Container _searchContainer(
-      double height, BuildContext context, Size size, WidgetRef ref) {
+  Stream<QuerySnapshot<Map<String, dynamic>>> controlStramCard(
+      Stream<QuerySnapshot<Map<String, dynamic>>> filterCardStream,
+      List typeList,
+      WidgetRef ref) {
+    var cardsStream = ref.watch(fireStoreServiceProvider.notifier).getCards();
+    Stream<QuerySnapshot<Map<String, dynamic>>> searchStream =
+        ref.watch(fireStoreServiceProvider).cardStream;
+    if (searchController.text.isEmpty && typeList == [false, false, false]) {
+      return cardsStream;
+    } else if (searchController.text.isNotEmpty) {
+      return searchStream;
+    } else {
+      return filterCardStream;
+    }
+  }
+
+  Container _searchContainer(double height, BuildContext context, Size size,
+      WidgetRef ref, List typeList) {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
@@ -309,7 +334,7 @@ class HomePage extends ConsumerWidget {
             hintText: LocaleKeys.homePage_searchContent.locale,
             suffixIcon: IconButton(
               onPressed: () {
-                _searchFilter(size, context);
+                _searchFilter(size, context, ref, typeList);
               },
               icon: const Icon(Icons.tune),
               splashColor: Colors.transparent,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mylibrary/localizations/language/locale_keys.g.dart';
+import 'package:mylibrary/localizations/string_extensions.dart';
 import 'package:mylibrary/model/card_model.dart';
 import 'package:mylibrary/pages/detail_item_page..dart';
 
@@ -37,7 +39,7 @@ class ItemCard extends StatelessWidget {
             )
           ]),
           title: Text(cardModel.itemName!),
-          subtitle: Text(cardModel.itemType!),
+          subtitle: Text(controItemType()),
           trailing: const Icon(Icons.info, size: 33),
         ),
       ),
@@ -51,6 +53,16 @@ class ItemCard extends StatelessWidget {
       return Colors.green.shade400;
     } else {
       return Colors.orange.shade400;
+    }
+  }
+
+  String controItemType() {
+    if (cardModel.itemType == 'film') {
+      return LocaleKeys.contentType_film.locale;
+    } else if (cardModel.itemType == 'series') {
+      return LocaleKeys.contentType_series.locale;
+    } else {
+      return LocaleKeys.contentType_book.locale;
     }
   }
 }
