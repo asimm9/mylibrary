@@ -28,6 +28,15 @@ class FireStoreService extends ChangeNotifier {
     notifyListeners();
   }
 
+  final Stream<QuerySnapshot<Map<String, dynamic>>> _filterCardStream =
+      const Stream.empty();
+  Stream<QuerySnapshot<Map<String, dynamic>>> get filterCardStream =>
+      _filterCardStream;
+  set filterCardStream(Stream<QuerySnapshot<Map<String, dynamic>>> value) {
+    filterCardStream = value;
+    notifyListeners();
+  }
+
   Stream<QuerySnapshot<Map<String, dynamic>>> _favoriteCardStream =
       Stream.empty();
   Stream<QuerySnapshot<Map<String, dynamic>>> get favoriteCardStream =>
@@ -103,6 +112,15 @@ class FireStoreService extends ChangeNotifier {
         .doc(_auth.currentUser!.uid)
         .collection('Cards')
         .where('itemName', isEqualTo: searchedValue)
+        .snapshots();
+  }
+
+  filterCardList(ItemType? itemType) {
+    filterCardStream = _firestore
+        .collection('UserCard')
+        .doc(_auth.currentUser!.uid)
+        .collection('Cards')
+        .where('itemType', isEqualTo: itemType)
         .snapshots();
   }
 
