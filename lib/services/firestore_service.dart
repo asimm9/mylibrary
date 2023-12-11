@@ -115,6 +115,15 @@ class FireStoreService extends ChangeNotifier {
         .snapshots();
   }
 
+  filterCardList(ItemType? itemType) {
+    filterCardStream = _firestore
+        .collection('UserCard')
+        .doc(_auth.currentUser!.uid)
+        .collection('Cards')
+        .where('itemType', isEqualTo: itemType)
+        .snapshots();
+  }
+
   searchFavoriteCardList(String searchedValue) {
     favoriteCardStream = _firestore
         .collection('UserCard')
