@@ -30,8 +30,6 @@ class ShowPage extends ChangeNotifier {
   }
 }
 
-final selectedItemTypeProvider = StateProvider<ItemType?>((ref) => null);
-
 class ThemeProvider extends ChangeNotifier {
   ThemeData _themeData = ThemeModeClass.lightMode;
   ThemeData get themeData => _themeData;

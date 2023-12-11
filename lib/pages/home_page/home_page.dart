@@ -192,12 +192,10 @@ class HomePage extends ConsumerWidget {
                           child: MyButton(
                             text: LocaleKeys.homePage_filter_filter.locale,
                             onTap: () {
+                              var value = typeListController(typeList);
                               ref
                                   .watch(fireStoreServiceProvider)
-                                  .filterCardList(ref
-                                      .watch(selectedItemTypeProvider.notifier)
-                                      .state);
-                              typeList = [false, false, false];
+                                  .filterCardList(value.toString());
 
                               Navigator.pop(context);
                             },
@@ -215,6 +213,18 @@ class HomePage extends ConsumerWidget {
         );
       },
     );
+  }
+
+  ItemType typeListController(List typeList) {
+    if (typeList[0]) {
+      return ItemType.film;
+    } else {
+      if (typeList[1]) {
+        return ItemType.series;
+      } else {
+        return ItemType.book;
+      }
+    }
   }
 
   Container _itemListContainer(
@@ -317,12 +327,14 @@ class HomePage extends ConsumerWidget {
         ref.watch(fireStoreServiceProvider).cardStream;
     Stream<QuerySnapshot<Map<String, dynamic>>> filterCardStream =
         ref.watch(fireStoreServiceProvider).cardStream;
-    if (searchController.text.isEmpty || typeList == [false, false, false]) {
+    if (searchController.text.isEmpty) {
       return cardsStream;
-    } else if (searchController.text.isNotEmpty) {
-      return searchStream;
     } else {
-      return filterCardStream;
+      if (searchController.text.isNotEmpty) {
+        return searchStream;
+      } else {
+        return filterCardStream;
+      }
     }
   }
 

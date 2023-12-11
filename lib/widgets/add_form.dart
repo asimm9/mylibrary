@@ -24,7 +24,7 @@ class _AddFormState extends ConsumerState<AddForm> {
   final TextEditingController _itemSumController = TextEditingController();
   double _currentSliderValue = 0;
   final Uuid _uuid = const Uuid();
-  // static ItemType? selectedItemType;
+  ItemType? selectedItemType;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class _AddFormState extends ConsumerState<AddForm> {
           backgroundColor:
               MaterialStatePropertyAll(Theme.of(context).colorScheme.tertiary)),
       onPressed: () async {
-        if (ref.watch(selectedItemTypeProvider.notifier).state == null) {
+        if (selectedItemType == null) {
           controlType();
           return;
         }
@@ -69,8 +69,7 @@ class _AddFormState extends ConsumerState<AddForm> {
               itemCreater: _createrNameController.text,
               itemName: _filmNameController.text,
               itemRate: _currentSliderValue.toInt(),
-              itemType:
-                  ref.watch(selectedItemTypeProvider.notifier).state!.name,
+              itemType: selectedItemType!.name,
               shortTextForItem: _itemSumController.text),
         );
       },
@@ -206,7 +205,7 @@ class _AddFormState extends ConsumerState<AddForm> {
                 setState(() {
                   itemType = value;
                 });
-                ref.watch(selectedItemTypeProvider.notifier).state = itemType;
+                selectedItemType = itemType;
               },
             ),
           ),
@@ -224,7 +223,7 @@ class _AddFormState extends ConsumerState<AddForm> {
                 setState(() {
                   itemType = value;
                 });
-                ref.watch(selectedItemTypeProvider.notifier).state = itemType;
+                selectedItemType = itemType;
               },
             ),
           ),
@@ -239,7 +238,7 @@ class _AddFormState extends ConsumerState<AddForm> {
                 setState(() {
                   itemType = value;
                 });
-                ref.watch(selectedItemTypeProvider.notifier).state = itemType;
+                selectedItemType = itemType;
               },
             ),
           ),

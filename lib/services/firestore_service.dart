@@ -28,17 +28,17 @@ class FireStoreService extends ChangeNotifier {
     notifyListeners();
   }
 
-  final Stream<QuerySnapshot<Map<String, dynamic>>> _filterCardStream =
+  Stream<QuerySnapshot<Map<String, dynamic>>> _filterCardStream =
       const Stream.empty();
   Stream<QuerySnapshot<Map<String, dynamic>>> get filterCardStream =>
       _filterCardStream;
   set filterCardStream(Stream<QuerySnapshot<Map<String, dynamic>>> value) {
-    filterCardStream = value;
+    _filterCardStream = value;
     notifyListeners();
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> _favoriteCardStream =
-      Stream.empty();
+      const Stream.empty();
   Stream<QuerySnapshot<Map<String, dynamic>>> get favoriteCardStream =>
       _favoriteCardStream;
   set favoriteCardStream(Stream<QuerySnapshot<Map<String, dynamic>>> value) {
@@ -115,7 +115,7 @@ class FireStoreService extends ChangeNotifier {
         .snapshots();
   }
 
-  filterCardList(ItemType? itemType) {
+  filterCardList(String itemType) {
     filterCardStream = _firestore
         .collection('UserCard')
         .doc(_auth.currentUser!.uid)
