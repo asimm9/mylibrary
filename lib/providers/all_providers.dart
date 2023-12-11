@@ -30,7 +30,7 @@ class ShowPage extends ChangeNotifier {
   }
 }
 
-final selectedItemTypeProvider = Provider<ItemType?>((ref) => null);
+final selectedItemTypeProvider = StateProvider<ItemType?>((ref) => null);
 
 class ThemeProvider extends ChangeNotifier {
   ThemeData _themeData = ThemeModeClass.lightMode;

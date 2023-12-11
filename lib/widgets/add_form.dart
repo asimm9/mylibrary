@@ -24,7 +24,7 @@ class _AddFormState extends ConsumerState<AddForm> {
   final TextEditingController _itemSumController = TextEditingController();
   double _currentSliderValue = 0;
   final Uuid _uuid = const Uuid();
-  //ItemType? selectedItemType;
+  // static ItemType? selectedItemType;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class _AddFormState extends ConsumerState<AddForm> {
           _fieldNameField(),
           _createrNameField(),
           _summaryTextField(height),
-          _selectedItemType(itemType),
+          _selectedItemType(itemType, ref),
           _customSlider(),
           _customElevatedButton(fireStoreService)
         ],
@@ -57,8 +57,7 @@ class _AddFormState extends ConsumerState<AddForm> {
           backgroundColor:
               MaterialStatePropertyAll(Theme.of(context).colorScheme.tertiary)),
       onPressed: () async {
-        var selectedItemType = ref.read(selectedItemTypeProvider);
-        if (selectedItemType == null) {
+        if (ref.watch(selectedItemTypeProvider.notifier).state == null) {
           controlType();
           return;
         }
@@ -70,10 +69,10 @@ class _AddFormState extends ConsumerState<AddForm> {
               itemCreater: _createrNameController.text,
               itemName: _filmNameController.text,
               itemRate: _currentSliderValue.toInt(),
-              itemType: selectedItemType!.name,
+              itemType:
+                  ref.watch(selectedItemTypeProvider.notifier).state!.name,
               shortTextForItem: _itemSumController.text),
         );
-        selectedItemType = null;
       },
       child: Text(
         LocaleKeys.addPage_add.locale,
@@ -192,8 +191,7 @@ class _AddFormState extends ConsumerState<AddForm> {
     );
   }
 
-  _selectedItemType(ItemType? itemType) {
-    var selectedItemType = ref.read(selectedItemTypeProvider);
+  _selectedItemType(ItemType? itemType, WidgetRef ref) {
     return StatefulBuilder(
       builder: (context, setState) => Row(
         children: [
@@ -207,8 +205,8 @@ class _AddFormState extends ConsumerState<AddForm> {
               onChanged: (value) {
                 setState(() {
                   itemType = value;
-                  selectedItemType = itemType;
                 });
+                ref.watch(selectedItemTypeProvider.notifier).state = itemType;
               },
             ),
           ),
@@ -225,8 +223,8 @@ class _AddFormState extends ConsumerState<AddForm> {
               onChanged: (value) {
                 setState(() {
                   itemType = value;
-                  selectedItemType = itemType;
                 });
+                ref.watch(selectedItemTypeProvider.notifier).state = itemType;
               },
             ),
           ),
@@ -240,8 +238,8 @@ class _AddFormState extends ConsumerState<AddForm> {
               onChanged: (value) {
                 setState(() {
                   itemType = value;
-                  selectedItemType = itemType;
                 });
+                ref.watch(selectedItemTypeProvider.notifier).state = itemType;
               },
             ),
           ),

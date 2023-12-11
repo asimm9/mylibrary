@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -190,15 +192,14 @@ class HomePage extends ConsumerWidget {
                           child: MyButton(
                             text: LocaleKeys.homePage_filter_filter.locale,
                             onTap: () {
-                              setState(
-                                () {
-                                  typeList = [false, false, false];
-                                  ref
-                                      .watch(fireStoreServiceProvider)
-                                      .filterCardList(
-                                          ref.watch(selectedItemTypeProvider));
-                                },
-                              );
+                              ref
+                                  .watch(fireStoreServiceProvider)
+                                  .filterCardList(ref
+                                      .watch(selectedItemTypeProvider.notifier)
+                                      .state);
+                              typeList = [false, false, false];
+
+                              Navigator.pop(context);
                             },
                             myheight: 0.05,
                             mycolor: Colors.greenAccent,
@@ -218,8 +219,6 @@ class HomePage extends ConsumerWidget {
 
   Container _itemListContainer(
       double height, WidgetRef ref, BuildContext context, List typeList) {
-    Stream<QuerySnapshot<Map<String, dynamic>>> filterCardStream =
-        ref.watch(fireStoreServiceProvider).filterCardStream;
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: height * 0.018, vertical: height * 0.002),
@@ -232,7 +231,7 @@ class HomePage extends ConsumerWidget {
             color: Theme.of(context).colorScheme.tertiary, width: 1.3),
       ),
       child: StreamBuilder(
-        stream: controlStramCard(filterCardStream, typeList, ref),
+        stream: controlStramCard(typeList, ref),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Center(
@@ -246,7 +245,7 @@ class HomePage extends ConsumerWidget {
           } else {
             return ListView.builder(
               shrinkWrap: true,
-              itemCount: snapshot.data!.docs.length,
+              itemCount: lengthControl(snapshot),
               itemBuilder: (context, index) {
                 var data = snapshot.data!.docs
                     .map((DocumentSnapshot documentSnapshot) =>
@@ -301,14 +300,24 @@ class HomePage extends ConsumerWidget {
     );
   }
 
+  lengthControl(snapshot) {
+    var itemCount;
+    if (snapshot.data != null) {
+      itemCount = snapshot.data!.docs.length;
+    } else {
+      itemCount = 0;
+    }
+    return itemCount;
+  }
+
   Stream<QuerySnapshot<Map<String, dynamic>>> controlStramCard(
-      Stream<QuerySnapshot<Map<String, dynamic>>> filterCardStream,
-      List typeList,
-      WidgetRef ref) {
-    var cardsStream = ref.watch(fireStoreServiceProvider.notifier).getCards();
+      List typeList, WidgetRef ref) {
+    final cardsStream = ref.watch(fireStoreServiceProvider.notifier).getCards();
     Stream<QuerySnapshot<Map<String, dynamic>>> searchStream =
         ref.watch(fireStoreServiceProvider).cardStream;
-    if (searchController.text.isEmpty && typeList == [false, false, false]) {
+    Stream<QuerySnapshot<Map<String, dynamic>>> filterCardStream =
+        ref.watch(fireStoreServiceProvider).cardStream;
+    if (searchController.text.isEmpty || typeList == [false, false, false]) {
       return cardsStream;
     } else if (searchController.text.isNotEmpty) {
       return searchStream;
