@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mylibrary/model/card_model.dart';
 import 'package:mylibrary/services/firebase_auth_service.dart';
 import 'package:mylibrary/services/firestore_service.dart';
 import 'package:mylibrary/theme/theme_mode.dart';

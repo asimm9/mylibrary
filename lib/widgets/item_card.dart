@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mylibrary/localizations/language/locale_keys.g.dart';
 import 'package:mylibrary/localizations/string_extensions.dart';
 import 'package:mylibrary/model/card_model.dart';
-import 'package:mylibrary/pages/detail_item_page..dart';
+import 'package:mylibrary/pages/detail_item_page/detail_item_page..dart';
 
 class ItemCard extends StatelessWidget {
   final CardModel cardModel;
