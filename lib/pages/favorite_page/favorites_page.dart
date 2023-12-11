@@ -4,9 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mylibrary/localizations/language/locale_keys.g.dart';
 import 'package:mylibrary/localizations/string_extensions.dart';
 import 'package:mylibrary/model/card_model.dart';
+import 'package:mylibrary/providers/all_providers.dart';
 import 'package:mylibrary/widgets/item_card.dart';
-
-import '../providers/all_providers.dart';
 
 class FavoritesPage extends ConsumerWidget {
   final TextEditingController searchController = TextEditingController();

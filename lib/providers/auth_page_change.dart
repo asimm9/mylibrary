@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mylibrary/pages/login_page.dart';
-import 'package:mylibrary/pages/register_page.dart';
+import 'package:mylibrary/pages/auth_pages/login_page.dart';
+import 'package:mylibrary/pages/auth_pages/register_page.dart';
 import 'package:mylibrary/providers/all_providers.dart';
 
 class AuthPageChange extends ConsumerWidget {

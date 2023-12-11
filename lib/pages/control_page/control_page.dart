@@ -10,11 +10,11 @@ import 'package:mylibrary/companants/app_constans.dart';
 import 'package:mylibrary/companants/text_style.dart';
 import 'package:mylibrary/localizations/language/locale_keys.g.dart';
 import 'package:mylibrary/localizations/string_extensions.dart';
-import 'package:mylibrary/pages/add_page.dart';
-import 'package:mylibrary/pages/favorites_page.dart';
-import 'package:mylibrary/pages/home_page.dart';
+import 'package:mylibrary/pages/add_page/add_page.dart';
+import 'package:mylibrary/pages/favorite_page/favorites_page.dart';
+import 'package:mylibrary/pages/home_page/home_page.dart';
 import 'package:mylibrary/providers/all_providers.dart';
-import '../services/firebase_auth_service.dart';
+import 'package:mylibrary/services/firebase_auth_service.dart';
 
 class ControlPage extends ConsumerStatefulWidget {
   const ControlPage({super.key});
