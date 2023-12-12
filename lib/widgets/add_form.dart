@@ -214,7 +214,7 @@ class _AddFormState extends ConsumerState<AddForm> {
               contentPadding: EdgeInsets.zero,
               title: LocaleText(
                 text: LocaleKeys.contentType_series,
-                textStyle: TextStyle(fontSize: 6),
+                textStyle: const TextStyle(fontSize: 6),
               ),
               activeColor: Colors.black,
               value: ItemType.series,
