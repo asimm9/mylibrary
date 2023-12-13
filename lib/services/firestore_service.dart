@@ -21,7 +21,8 @@ class FireStoreService extends ChangeNotifier {
     notifyListeners();
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> _cardStream = Stream.empty();
+  Stream<QuerySnapshot<Map<String, dynamic>>> _cardStream =
+      const Stream.empty();
   Stream<QuerySnapshot<Map<String, dynamic>>> get cardStream => _cardStream;
   set cardStream(Stream<QuerySnapshot<Map<String, dynamic>>> value) {
     _cardStream = value;
