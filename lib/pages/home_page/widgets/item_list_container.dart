@@ -2,13 +2,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mylibrary/model/card_model.dart';
 
+import 'package:mylibrary/model/card_model.dart';
 import 'package:mylibrary/providers/all_providers.dart';
 import 'package:mylibrary/widgets/item_card.dart';
 
 // ignore: must_be_immutable
-class ItemListContainer extends ConsumerWidget {
+class ItemListContainer extends ConsumerStatefulWidget {
   TextEditingController searchController;
   double height;
   ItemListContainer({
@@ -18,12 +18,18 @@ class ItemListContainer extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ItemListContainerState();
+}
+
+class _ItemListContainerState extends ConsumerState<ItemListContainer> {
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-          horizontal: height * 0.018, vertical: height * 0.002),
+          horizontal: widget.height * 0.018, vertical: widget.height * 0.002),
       margin: const EdgeInsets.fromLTRB(21, 0, 21, 0),
-      height: height * 0.67,
+      height: widget.height * 0.67,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primary,
         borderRadius: BorderRadius.circular(15),
@@ -31,7 +37,7 @@ class ItemListContainer extends ConsumerWidget {
             color: Theme.of(context).colorScheme.tertiary, width: 1.3),
       ),
       child: StreamBuilder(
-        stream: controlStramCard(ref, searchController),
+        stream: controlStramCard(ref, widget.searchController),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Center(
@@ -103,19 +109,31 @@ class ItemListContainer extends ConsumerWidget {
 
 Stream<QuerySnapshot<Map<String, dynamic>>> controlStramCard(
     WidgetRef ref, TextEditingController searchController) {
-  List typeList = ref.watch(itemTypeListProvider.notifier).state;
+  List typeList = ref.watch(itemTypeListProvider).typeList;
+  List itemRateList = ref.watch(itemRateListProvider).itemRateList;
   final cardsStream = ref.watch(fireStoreServiceProvider.notifier).getCards();
+
   Stream<QuerySnapshot<Map<String, dynamic>>> searchStream =
       ref.watch(fireStoreServiceProvider).cardStream;
+
   Stream<QuerySnapshot<Map<String, dynamic>>> filterCardStream =
-      ref.watch(fireStoreServiceProvider).cardStream;
+      ref.watch(fireStoreServiceProvider).filterCardStream;
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> itemRateCardStream =
+      ref.watch(fireStoreServiceProvider).itemRateCardStream;
+
   if (searchController.text.isEmpty &&
-      List.from(typeList).every((element) => element == false)) {
+      List.from(typeList).every((element) => element == false) &&
+      List.from(itemRateList).every((element) => element == false)) {
     return cardsStream;
   } else if (searchController.text.isNotEmpty &&
-      List.from(typeList).every((element) => element == false)) {
+      List.from(typeList).every((element) => element == false) &&
+      List.from(itemRateList).every((element) => element == false)) {
     return searchStream;
-  } else {
+  } else if (List.from(typeList).any((element) => true) &&
+      List.from(itemRateList).every((element) => element == false)) {
     return filterCardStream;
+  } else {
+    return itemRateCardStream;
   }
 }
