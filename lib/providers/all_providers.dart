@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mylibrary/model/card_model.dart';
+import 'package:mylibrary/providers/item_rate_list_provider.dart';
+import 'package:mylibrary/providers/item_type_list_provider.dart';
 import 'package:mylibrary/providers/show_page_provider.dart';
 import 'package:mylibrary/providers/theme_provider.dart';
 import 'package:mylibrary/services/firebase_auth_service.dart';
@@ -27,4 +29,7 @@ final currentSliderValueProvider = StateProvider<double>((ref) => 0);
 final selectedIndexNavigatorBarProvider = StateProvider<int>((ref) => 0);
 
 final itemTypeListProvider =
-    StateProvider<List>((ref) => [false, false, false]);
+    ChangeNotifierProvider<ItemTypeValue>((ref) => ItemTypeValue());
+
+final itemRateListProvider =
+    ChangeNotifierProvider<ItemRateValue>((ref) => ItemRateValue());

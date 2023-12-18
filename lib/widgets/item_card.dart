@@ -31,7 +31,7 @@ class ItemCard extends StatelessWidget {
           tileColor: Theme.of(context).colorScheme.secondary,
           leading:
               Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text(cardModel.itemRate!.toStringAsFixed(2)),
+            Text(cardModel.itemRate!.toStringAsFixed(1)),
             Icon(
               Icons.star,
               size: 20,
