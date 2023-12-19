@@ -39,7 +39,12 @@ class ItemListField extends StatelessWidget {
               return Text(snapshot.error.toString());
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Text('loading');
+              return Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: height * 0.018, vertical: height * 0.002),
+                margin: const EdgeInsets.fromLTRB(21, 0, 21, 0),
+                height: height * 0.62,
+              ); //const CircularProgressIndicator();
             } else {
               return ListView.builder(
                 itemCount: snapshot.data!.docs.length,
