@@ -40,7 +40,7 @@
     }
   },
   "addPage":{
-    "contentType":"Content type",
+    "contentType":"Content Name",
     "writerOrDirectorName":"Author or director name",
     "mentionAboutTheContent":"Briefly talk about content",
     "add":"Add"

@@ -41,7 +41,7 @@
     }
   },
   "addPage":{
-    "contentType":"İçerik türü",
+    "contentType":"İçerik ismi",
     "writerOrDirectorName":"Yazar veya yönetmen adı",
     "mentionAboutTheContent":"İçerikten kısaca bahsedin",
     "add":"Ekle"
