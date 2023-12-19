@@ -23,6 +23,7 @@ class PopUpMenuButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
+      position: PopupMenuPosition.under,
       icon:
           Icon(Icons.more_vert, color: Theme.of(context).colorScheme.tertiary),
       onSelected: (value) {
