@@ -47,7 +47,6 @@ class _SelectedItemTypeState extends ConsumerState<SelectedItemType> {
             contentPadding: EdgeInsets.zero,
             title: LocaleText(
               text: LocaleKeys.contentType_series,
-              textStyle: const TextStyle(fontSize: 6),
             ),
             activeColor: Colors.black,
             value: ItemType.series,
@@ -64,7 +63,9 @@ class _SelectedItemTypeState extends ConsumerState<SelectedItemType> {
         Expanded(
           child: RadioListTile<ItemType>(
             contentPadding: EdgeInsets.zero,
-            title: LocaleText(text: LocaleKeys.contentType_book),
+            title: LocaleText(
+              text: LocaleKeys.contentType_book,
+            ),
             activeColor: Colors.black,
             value: ItemType.book,
             groupValue: widget.itemType,
