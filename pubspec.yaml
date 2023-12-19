@@ -43,6 +43,7 @@ dependencies:
   uuid: ^4.1.0
   easy_localization: ^3.0.3
   auto_size_text: ^3.0.0
+  google_sign_in: 
 
 dev_dependencies:
   flutter_test:
