@@ -1,10 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:uuid/uuid.dart';
 
 class FirebaseAuthService extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  final Uuid _uuid = const Uuid();
 
   Stream<User?> get authStateChangegs => _auth.authStateChanges();
 
@@ -31,5 +35,29 @@ class FirebaseAuthService extends ChangeNotifier {
         .doc(_auth.currentUser!.uid)
         .set(dataMap);
     return user.user!;
+  }
+
+  Future<User> authWithGoogle() async {
+    final GoogleSignInAccount? googleSignInAccount =
+        await GoogleSignIn().signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount!.authentication;
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+    UserCredential userCredential =
+        await _auth.signInWithCredential(credential);
+    Map<String, dynamic> dataMap = {
+      'email': userCredential.user!.email,
+      'id': userCredential.user!.uid,
+      'username': _uuid.v4()
+    };
+    await _firestore
+        .collection('UserCard')
+        .doc(_auth.currentUser!.uid)
+        .set(dataMap);
+    print(userCredential.user!.toString());
+    return userCredential.user!;
   }
 }

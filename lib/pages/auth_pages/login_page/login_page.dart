@@ -53,7 +53,9 @@ class LoginPage extends ConsumerWidget {
               const SizedBox(height: 15),
               MyButton(
                 mycolor: Theme.of(context).colorScheme.tertiary,
-                onTap: () {},
+                onTap: () {
+                  ref.watch(authenticationProvider).authWithGoogle();
+                },
                 text: LocaleKeys.login_register_continueWithGoogle.locale,
                 icon: Icons.mail,
               ),
