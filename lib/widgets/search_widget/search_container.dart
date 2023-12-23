@@ -4,20 +4,26 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:mylibrary/localizations/language/locale_keys.g.dart';
 import 'package:mylibrary/localizations/string_extensions.dart';
-import 'package:mylibrary/pages/home_page/widgets/search_filter.dart';
-import 'package:mylibrary/providers/all_providers.dart';
+import 'package:mylibrary/widgets/search_widget/search_filter.dart';
 
 // ignore: must_be_immutable
 class SearchContainer extends ConsumerWidget {
   TextEditingController searchController;
   double height;
   Size size;
-  SearchContainer({
-    super.key,
-    required this.searchController,
-    required this.height,
-    required this.size,
-  });
+  Function(String) onSearch;
+  List itemRateList;
+  List typeList;
+  void Function() onTap;
+  SearchContainer(
+      {super.key,
+      required this.searchController,
+      required this.height,
+      required this.size,
+      required this.onSearch,
+      required this.typeList,
+      required this.itemRateList,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,17 +43,21 @@ class SearchContainer extends ConsumerWidget {
             suffixIcon: IconButton(
               onPressed: () {
                 showDialog(
-                    context: context,
-                    builder: (context) => SearchFilter(
-                          size: size,
-                        ));
+                  context: context,
+                  builder: (context) => SearchFilter(
+                      typeList: typeList,
+                      itemRateList: itemRateList,
+                      size: size,
+                      onTap: onTap),
+                );
               },
               icon: const Icon(Icons.tune),
               splashColor: Colors.transparent,
             ),
             border: InputBorder.none),
-        onSubmitted: (value) {
-          ref.watch(fireStoreServiceProvider).searchCardList(value);
+        onSubmitted: (value) async {
+          await onSearch(value);
+          debugPrint(value);
         },
       ),
     );
