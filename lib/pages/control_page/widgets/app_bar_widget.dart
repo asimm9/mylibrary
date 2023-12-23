@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:mylibrary/companants/text_style.dart';
-import 'package:mylibrary/pages/control_page/widgets/change_language.dart';
 import 'package:mylibrary/pages/control_page/widgets/helper_show_dialog.dart';
 import 'package:mylibrary/pages/control_page/widgets/pop_up_menu_button.dart';
 import 'package:mylibrary/providers/theme_provider.dart';
@@ -47,7 +46,7 @@ class ControlPageAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       actions: [
-        const ChangeLanguage(),
+        //const ChangeLanguage(),
         PopUpMenuButtonWidget(
             authProvider: authProvider, themeModeProvider: themeModeState),
       ],

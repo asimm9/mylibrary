@@ -14,6 +14,7 @@ class ContentNameField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorColor: Theme.of(context).primaryColor,
       controller: contentTypeNameController,
       decoration: InputDecoration(
         filled: true,

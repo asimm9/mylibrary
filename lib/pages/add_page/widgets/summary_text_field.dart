@@ -19,6 +19,7 @@ class SummaryTextField extends StatelessWidget {
     return SizedBox(
       height: height * 0.26,
       child: TextFormField(
+        cursorColor: Theme.of(context).primaryColor,
         minLines: 8,
         maxLines: 8,
         controller: summaryTextController,

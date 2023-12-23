@@ -14,6 +14,7 @@ class CreaterNameField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorColor: Theme.of(context).primaryColor,
       controller: createrNameController,
       decoration: InputDecoration(
         filled: true,
