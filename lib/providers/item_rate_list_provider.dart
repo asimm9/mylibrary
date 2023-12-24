@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ItemRateValue extends ChangeNotifier {
-  List<bool> _itemRateList = [false, false, false, false, false];
-  List<bool> get itemRateList => _itemRateList;
+class ItemRataList extends ChangeNotifier {
+  List<int> _itemRateList = [];
+  List<int> get itemRateList => _itemRateList;
 
-  void updateListValue() {
-    _itemRateList = List.filled(_itemRateList.length, false);
+  updateItemList() {
+    _itemRateList = [];
     notifyListeners();
   }
 }

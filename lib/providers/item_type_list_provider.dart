@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ItemTypeValue extends ChangeNotifier {
-  List<bool> _typeList = [false, false, false];
-  List<bool> get typeList => _typeList;
+class ItemList extends ChangeNotifier {
+  List<String> _itemTypeList = [];
+  List<String> get typeList => _itemTypeList;
 
-  void updateListValue() {
-    _typeList = List.filled(_typeList.length, false);
+  updateItemList() {
+    _itemTypeList = [];
     notifyListeners();
   }
 }

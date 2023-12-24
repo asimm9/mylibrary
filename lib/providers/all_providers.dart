@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mylibrary/model/card_model.dart';
 import 'package:mylibrary/providers/item_rate_list_provider.dart';
+import 'package:mylibrary/providers/item_rate_value_list_provider.dart';
 import 'package:mylibrary/providers/item_type_list_provider.dart';
+import 'package:mylibrary/providers/item_type_value_list_provider.dart';
 import 'package:mylibrary/providers/show_page_provider.dart';
 import 'package:mylibrary/providers/theme_provider.dart';
 import 'package:mylibrary/services/firebase_auth_service.dart';
@@ -28,8 +30,13 @@ final selectedItemtypeProvider = StateProvider<ItemType?>((ref) => null);
 final currentSliderValueProvider = StateProvider<double>((ref) => 0);
 final selectedIndexNavigatorBarProvider = StateProvider<int>((ref) => 0);
 
-final itemTypeListProvider =
+final itemTypeValueListProvider =
     ChangeNotifierProvider<ItemTypeValue>((ref) => ItemTypeValue());
 
-final itemRateListProvider =
+final itemRateValueListProvider =
     ChangeNotifierProvider<ItemRateValue>((ref) => ItemRateValue());
+
+final itemTypeListProvider =
+    ChangeNotifierProvider<ItemList>((ref) => ItemList());
+final itemRateListProvider =
+    ChangeNotifierProvider<ItemRataList>((ref) => ItemRataList());

@@ -47,12 +47,33 @@ class FireStoreService extends ChangeNotifier {
     notifyListeners();
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> _favoriteCardStream =
+  Stream<QuerySnapshot<Map<String, dynamic>>> _searchFavoriteCardStream =
       const Stream.empty();
-  Stream<QuerySnapshot<Map<String, dynamic>>> get favoriteCardStream =>
-      _favoriteCardStream;
-  set favoriteCardStream(Stream<QuerySnapshot<Map<String, dynamic>>> value) {
-    _favoriteCardStream = value;
+  Stream<QuerySnapshot<Map<String, dynamic>>> get searchFavoriteCardStream =>
+      _searchFavoriteCardStream;
+  set searchFavoriteCardStream(
+      Stream<QuerySnapshot<Map<String, dynamic>>> value) {
+    _searchFavoriteCardStream = value;
+    notifyListeners();
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> _filterFavoriteCardStream =
+      const Stream.empty();
+  Stream<QuerySnapshot<Map<String, dynamic>>> get filterFavoriteCardStream =>
+      _filterFavoriteCardStream;
+  set filterFavoriteCardStream(
+      Stream<QuerySnapshot<Map<String, dynamic>>> value) {
+    _filterFavoriteCardStream = value;
+    notifyListeners();
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> _itemRateFavoriteCardStream =
+      const Stream.empty();
+  Stream<QuerySnapshot<Map<String, dynamic>>> get itemRateFavoriteCardStream =>
+      _itemRateFavoriteCardStream;
+  set itemRateFavoriteCardStream(
+      Stream<QuerySnapshot<Map<String, dynamic>>> value) {
+    _itemRateFavoriteCardStream = value;
     notifyListeners();
   }
 
@@ -117,39 +138,67 @@ class FireStoreService extends ChangeNotifier {
   }
 
   searchCardList(String searchedValue) {
-    cardStream = _firestore
-        .collection('UserCard')
-        .doc(_auth.currentUser!.uid)
-        .collection('Cards')
-        .where('itemName', isEqualTo: searchedValue)
-        .snapshots();
+    cardStream =
+        filterCard().where('itemName', isEqualTo: searchedValue).snapshots();
   }
 
-  filterCardList(String itemType) {
-    filterCardStream = _firestore
-        .collection('UserCard')
-        .doc(_auth.currentUser!.uid)
-        .collection('Cards')
-        .where('itemType', isEqualTo: itemType)
-        .snapshots();
+  filterCardList(List itemTypeLit) async {
+    if (itemTypeLit.isNotEmpty) {
+      filterCardStream =
+          filterCard().where('itemType', whereIn: itemTypeLit).snapshots();
+    } else {
+      print(
+          'Uyarı: Boş bir liste, whereIn filtresi için sorgu çalıştırılmadı.');
+    }
   }
 
-  itemRateCardList(int cardRate) {
-    itemRateCardStream = _firestore
-        .collection('UserCard')
-        .doc(_auth.currentUser!.uid)
-        .collection('Cards')
-        .where('itemRate', isEqualTo: cardRate)
-        .snapshots();
+  itemRateCardList(List itemRateList) async {
+    if (itemRateList.isNotEmpty) {
+      itemRateCardStream =
+          filterCard().where('itemRate', whereIn: itemRateList).snapshots();
+    } else {
+      print(
+          'Uyarı: Boş bir liste, whereIn filtresi için sorgu çalıştırılmadı.');
+    }
   }
 
   searchFavoriteCardList(String searchedValue) {
-    favoriteCardStream = _firestore
-        .collection('UserCard')
-        .doc(_auth.currentUser!.uid)
-        .collection('Cards')
+    searchFavoriteCardStream = filterCard()
         .where('isFavorite', isEqualTo: true)
         .where('itemName', isEqualTo: searchedValue)
         .snapshots();
   }
+
+  filterFavoriteCardList(List itemTypeLit) {
+    if (itemTypeLit.isNotEmpty) {
+      filterFavoriteCardStream = filterCard()
+          .where('isFavorite', isEqualTo: true)
+          .where('itemType', whereIn: itemTypeLit)
+          .snapshots();
+    } else {
+      print(
+          'Uyarı: Boş bir liste, whereIn filtresi için sorgu çalıştırılmadı.');
+    }
+  }
+
+  itemRateFavoriteCardList(List itemRateList) async {
+    if (itemRateList.isNotEmpty) {
+      itemRateFavoriteCardStream = filterCard()
+          .where('isFavorite', isEqualTo: true)
+          .where('itemRate', whereIn: itemRateList)
+          .snapshots();
+    } else {
+      print(
+          'Uyarı: Boş bir liste, whereIn filtresi için sorgu çalıştırılmadı.');
+    }
+  }
+}
+
+CollectionReference<Map<String, dynamic>> filterCard() {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  return _firestore
+      .collection('UserCard')
+      .doc(_auth.currentUser!.uid)
+      .collection('Cards');
 }

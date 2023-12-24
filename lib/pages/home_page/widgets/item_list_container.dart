@@ -109,8 +109,8 @@ class _ItemListContainerState extends ConsumerState<ItemListContainer> {
 
 Stream<QuerySnapshot<Map<String, dynamic>>> controlStramCard(
     WidgetRef ref, TextEditingController searchController) {
-  List typeList = ref.watch(itemTypeListProvider).typeList;
-  List itemRateList = ref.watch(itemRateListProvider).itemRateList;
+  List typeList = ref.watch(itemTypeValueListProvider).typeList;
+  List itemRateList = ref.watch(itemRateValueListProvider).itemRateList;
   final cardsStream = ref.watch(fireStoreServiceProvider.notifier).getCards();
 
   Stream<QuerySnapshot<Map<String, dynamic>>> searchStream =
