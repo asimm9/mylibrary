@@ -17,7 +17,7 @@ class _NavigatorBarState extends ConsumerState<NavigatorBar> {
     return ConvexAppBar(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       activeColor: Theme.of(context).colorScheme.tertiary,
-      color: Theme.of(context).colorScheme.primary,
+      color: Theme.of(context).colorScheme.onBackground,
       style: TabStyle.custom,
       top: -20,
       curveSize: 70,
