@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mylibrary/localizations/language/locale_keys.g.dart';
+import 'package:mylibrary/localizations/string_extensions.dart';
 import 'package:mylibrary/pages/home_page/widgets/item_list_container.dart';
 import 'package:mylibrary/providers/all_providers.dart';
 import 'package:mylibrary/services/firestore_service.dart';
@@ -17,41 +19,46 @@ class HomePage extends ConsumerWidget {
     List itemTypeList = ref.watch(itemTypeValueListProvider).typeList;
     List itemRateList = ref.watch(itemRateValueListProvider).itemRateList;
     Size size = MediaQuery.of(context).size;
-    return Column(children: [
-      SearchContainer(
-        searchController: searchController,
-        height: size.height,
-        size: size,
-        onSearch: (value) {
-          ref.watch(fireStoreServiceProvider).searchCardList(value);
-        },
-        typeList: itemTypeList,
-        itemRateList: itemRateList,
-        onTap: () {
-          List selectedTypeList = ref.watch(itemTypeListProvider).typeList;
+    return Column(
+      children: [
+        SearchContainer(
+          searchController: searchController,
+          height: size.height,
+          size: size,
+          onSearch: (value) {
+            ref.watch(fireStoreServiceProvider).searchCardList(value);
+          },
+          typeList: itemTypeList,
+          itemRateList: itemRateList,
+          onTap: () {
+            List selectedTypeList = ref.watch(itemTypeListProvider).typeList;
 
-          List selectedRateList = ref.watch(itemRateListProvider).itemRateList;
+            List selectedRateList =
+                ref.watch(itemRateListProvider).itemRateList;
 
-          List value = typeListController(itemTypeList, selectedTypeList);
+            List value = typeListController(itemTypeList, selectedTypeList);
 
-          List rateValue = itemRateController(itemRateList, selectedRateList);
+            List rateValue = itemRateController(itemRateList, selectedRateList);
 
-          fireStoreRef.itemRateCardList(rateValue);
-          fireStoreRef.filterCardList(value);
-          debugPrint(rateValue.toString());
+            fireStoreRef.itemRateCardList(rateValue);
+            fireStoreRef.filterCardList(value);
+            debugPrint(rateValue.toString());
 
-          ref.watch(itemTypeListProvider).updateItemList();
-          ref.watch(itemRateListProvider).updateItemList();
+            ref.watch(itemTypeListProvider).updateItemList();
+            ref.watch(itemRateListProvider).updateItemList();
 
-          Navigator.pop(context);
-        },
-      ),
-      Padding(padding: EdgeInsets.all(size.height * 0.018)),
-      ItemListContainer(
-        searchController: searchController,
-        height: size.height,
-      )
-    ]);
+            Navigator.pop(context);
+          },
+        ),
+        Padding(padding: EdgeInsets.all(size.height * 0.018)),
+        ItemListContainer(
+          searchController: searchController,
+          height: size.height,
+        ),
+        Padding(padding: EdgeInsets.all(size.height * 0.008)),
+        Text(LocaleKeys.homePage_swipeLeftToRemove.locale)
+      ],
+    );
   }
 }
 

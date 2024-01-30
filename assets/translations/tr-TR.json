@@ -38,7 +38,8 @@
       "bookName":"Kitap Adı",
       "clean":"Temizle",
       "filter":"Filtrele"
-    }
+    },
+    "swipeLeftToRemove":"Silmek için sola doğru kaydırınız"
   },
   "addPage":{
     "contentType":"İçerik ismi",
@@ -53,5 +54,26 @@
   },
   "favoritePage":{
     "swipeLeftToRemoveFromFavorites":"Favorilerden çıkarmak için sola doğru kaydırınız"
+  },
+  "detailPage":{
+    "filmName":"Film Adı:",
+    "writerName":"Yazar Adı:",
+    "aboutContent":"İçerik Hakkında:"
+  },
+  "validators":{
+    "pleaseFillInThisField":"Lütfen bu alanı doldurun.",
+    "enterValidEmailAdress":"Lütfen geçerli bir eposta adresi giriniz.",
+    "enterPassword":"Lütfen şifrenizi giriniz.",
+    "wrongEmailOrPassword":"Yanlış e-posta veya şifre girdiniz.",
+    "loginPleaseTryAgain":"Giriş yaparken bir hata oluştu. Lütfen tekrar deneyin.",
+    "enterUserName":"'Lütfen bir kullanıcı adı giriniz'.",
+    "enterConfirmPassword":"Lütfen şifrenizi doğrulayınız.",
+    "passwordsDoNotMatch":"Şifreler eşleşmiyor !",
+    "emailAlreadyExist":"Bu e-posta zaten var. Başka bir e-posta deneyiniz.",
+    "registerPleaseTryAgain":"Kaydolurken bir hata oluştu. Lütfen tekrar deneyin.",
+    "cardPleaseTryAgain":"'Card oluşturulurken bir hata oluştu. Tekrar deneyiniz.'",
+    "pleaseChooseType":"Lütfen bir tip seçiniz !",
+    "cardRemovedFavorite":"Kart favorilerden çıkarıldı!",
+    "cardRemoved":"Kart silindi!"
   }
   }

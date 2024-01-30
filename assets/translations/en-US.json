@@ -37,7 +37,8 @@
       "bookName":"Book name",
       "clean":"Clean",
       "filter":"Filters"
-    }
+    },
+    "swipeLeftToRemove":"Scroll to the left to remove"
   },
   "addPage":{
     "contentType":"Content Name",
@@ -52,5 +53,26 @@
   },
   "favoritePage":{
     "swipeLeftToRemoveFromFavorites":"Scroll to the left to remove from favorites"
+  },
+  "detailPage":{
+    "filmName":"Film Name:",
+    "writerName":"Writer Name:",
+    "aboutContent":"About Content:"
+  },
+  "validators":{
+    "pleaseFillInThisField":"Please fill in this field.",
+    "enterValidEmailAdress":"Please enter a valid e-mail address.",
+    "enterPassword":"Please enter your password.",
+    "wrongEmailOrPassword":"Wrong e-mail or password",
+    "loginPleaseTryAgain":"An error occurred while logging in. Please try again.",
+    "enterUserName":"Please enter a username.",
+    "enterConfirmPassword":"Please verify your password",
+    "passwordsDoNotMatch":"Passwords do not match!",
+    "emailAlreadyExist":"This email already exists. Try another email.",
+    "registerPleaseTryAgain":"An error occurred while registering. Please try again.",
+    "cardPleaseTryAgain":"'An error occurred while creating the card. Try again.'",
+    "pleaseChooseType":"Please choose a type!",
+    "cardRemovedFavorite":"Card removed from favorites!",
+    "cardRemoved":"Card removed!"
   }
   }

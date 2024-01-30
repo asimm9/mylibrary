@@ -51,11 +51,11 @@ class MyButton extends ConsumerWidget {
               )
             : Text(
                 text,
-                style: TextStyle(
+                style: const TextStyle(
                     fontFamily: 'Roboto',
                     fontSize: 22,
                     fontWeight: FontWeight.w600,
-                    color: Theme.of(context).colorScheme.primary),
+                    color: Colors.white),
               ),
       ),
     );

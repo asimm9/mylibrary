@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:mylibrary/localizations/string_extensions.dart';
 
-class LocaleText extends StatelessWidget {
+class LocaleText extends StatefulWidget {
   TextStyle? textStyle;
   final String text;
   LocaleText({
@@ -14,10 +14,15 @@ class LocaleText extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<LocaleText> createState() => _LocaleTextState();
+}
+
+class _LocaleTextState extends State<LocaleText> {
+  @override
   Widget build(BuildContext context) {
     return AutoSizeText(
-      text.locale,
-      style: textStyle,
+      widget.text.locale,
+      style: widget.textStyle,
     );
   }
 }
