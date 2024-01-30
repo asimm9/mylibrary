@@ -22,8 +22,9 @@ class _CustomSliderState extends ConsumerState<CustomSlider> {
           .state
           .round()
           .toString(),
-      divisions: 5,
+      divisions: 4,
       max: 5,
+      min: 1,
       value: ref.watch(currentSliderValueProvider.notifier).state,
       onChanged: (value) {
         setState(() {

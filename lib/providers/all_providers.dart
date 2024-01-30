@@ -42,5 +42,5 @@ final languageCountProvider =
     ChangeNotifierProvider<LanguageCount>((ref) => LanguageCount());
 
 final selectedItemtypeProvider = StateProvider<ItemType?>((ref) => null);
-final currentSliderValueProvider = StateProvider<double>((ref) => 0);
+final currentSliderValueProvider = StateProvider<double>((ref) => 1);
 final selectedIndexNavigatorBarProvider = StateProvider<int>((ref) => 0);
