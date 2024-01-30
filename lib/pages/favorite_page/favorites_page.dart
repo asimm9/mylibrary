@@ -56,7 +56,9 @@ class FavoritesPage extends ConsumerWidget {
           height: size.height,
         ),
         Padding(padding: EdgeInsets.all(size.height * 0.008)),
-        Text(LocaleKeys.favoritePage_swipeLeftToRemoveFromFavorites.locale)
+        Text(
+          LocaleKeys.favoritePage_swipeLeftToRemoveFromFavorites.locale,
+        )
       ],
     );
   }

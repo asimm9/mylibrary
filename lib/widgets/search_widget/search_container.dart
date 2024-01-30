@@ -37,6 +37,7 @@ class SearchContainer extends ConsumerWidget {
       child: TextField(
         textAlign: TextAlign.center,
         controller: searchController,
+        cursorColor: Theme.of(context).colorScheme.tertiary,
         decoration: InputDecoration(
             prefixIcon: const Icon(Icons.search),
             hintText: LocaleKeys.homePage_searchContent.locale,

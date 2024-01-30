@@ -5,6 +5,7 @@ import 'package:mylibrary/providers/item_rate_list_provider.dart';
 import 'package:mylibrary/providers/item_rate_value_list_provider.dart';
 import 'package:mylibrary/providers/item_type_list_provider.dart';
 import 'package:mylibrary/providers/item_type_value_list_provider.dart';
+import 'package:mylibrary/providers/language_count_provider.dart';
 import 'package:mylibrary/providers/show_page_provider.dart';
 import 'package:mylibrary/providers/theme_provider.dart';
 import 'package:mylibrary/services/firebase_auth_service.dart';
@@ -26,10 +27,6 @@ final showPageChangeProvider =
 final themeModeProvider =
     ChangeNotifierProvider<ThemeProvider>((ref) => ThemeProvider());
 
-final selectedItemtypeProvider = StateProvider<ItemType?>((ref) => null);
-final currentSliderValueProvider = StateProvider<double>((ref) => 0);
-final selectedIndexNavigatorBarProvider = StateProvider<int>((ref) => 0);
-
 final itemTypeValueListProvider =
     ChangeNotifierProvider<ItemTypeValue>((ref) => ItemTypeValue());
 
@@ -40,3 +37,10 @@ final itemTypeListProvider =
     ChangeNotifierProvider<ItemList>((ref) => ItemList());
 final itemRateListProvider =
     ChangeNotifierProvider<ItemRataList>((ref) => ItemRataList());
+
+final languageCountProvider =
+    ChangeNotifierProvider<LanguageCount>((ref) => LanguageCount());
+
+final selectedItemtypeProvider = StateProvider<ItemType?>((ref) => null);
+final currentSliderValueProvider = StateProvider<double>((ref) => 0);
+final selectedIndexNavigatorBarProvider = StateProvider<int>((ref) => 0);

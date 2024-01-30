@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mylibrary/model/card_model.dart';
@@ -191,6 +192,11 @@ class FireStoreService extends ChangeNotifier {
       print(
           'Uyarı: Boş bir liste, whereIn filtresi için sorgu çalıştırılmadı.');
     }
+  }
+
+  String formatTimeStamp(Timestamp timestamp) {
+    DateFormat format = DateFormat('d-MM-y  HH:mm');
+    return format.format(timestamp.toDate());
   }
 }
 

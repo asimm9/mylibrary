@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mylibrary/localizations/language/locale_keys.g.dart';
+import 'package:mylibrary/localizations/string_extensions.dart';
 import 'package:mylibrary/model/card_model.dart';
 
 class DetailPart extends StatelessWidget {
@@ -15,9 +17,9 @@ class DetailPart extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Text(
-                'Film Adı:',
-                style: TextStyle(fontSize: 20),
+              Text(
+                LocaleKeys.detailPage_filmName.locale,
+                style: const TextStyle(fontSize: 20),
               ),
               const SizedBox(width: 5),
               Flexible(
@@ -30,9 +32,9 @@ class DetailPart extends StatelessWidget {
           ),
           Row(
             children: [
-              const Text(
-                'Yazar Adı:',
-                style: TextStyle(fontSize: 20),
+              Text(
+                LocaleKeys.detailPage_writerName.locale,
+                style: const TextStyle(fontSize: 20),
               ),
               const SizedBox(width: 5),
               Flexible(
@@ -45,9 +47,9 @@ class DetailPart extends StatelessWidget {
           ),
           Row(
             children: [
-              const Text(
-                'İçerik Hakkınadaa:',
-                style: TextStyle(fontSize: 20),
+              Text(
+                LocaleKeys.detailPage_aboutContent.locale,
+                style: const TextStyle(fontSize: 20),
               ),
               const SizedBox(width: 5),
               Flexible(

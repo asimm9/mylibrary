@@ -2,10 +2,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mylibrary/localizations/language/locale_keys.g.dart';
+import 'package:mylibrary/localizations/string_extensions.dart';
 
 import 'package:mylibrary/model/card_model.dart';
 import 'package:mylibrary/providers/all_providers.dart';
 import 'package:mylibrary/widgets/item_card.dart';
+import 'package:mylibrary/widgets/my_snack_bar.dart';
 
 // ignore: must_be_immutable
 class ItemListContainer extends ConsumerStatefulWidget {
@@ -82,14 +85,8 @@ class _ItemListContainerState extends ConsumerState<ItemListContainer> {
                           ),
                         );
                     if (direction == DismissDirection.endToStart) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Kart silindi!!!'),
-                          duration: Duration(seconds: 1),
-                          dismissDirection: DismissDirection.up,
-                          behavior: SnackBarBehavior.floating,
-                        ),
-                      );
+                      MySnackBar.snackBar(
+                          context, LocaleKeys.validators_cardRemoved.locale, 2);
                     }
                   },
                   child: ItemCard(
