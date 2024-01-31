@@ -9,6 +9,7 @@ class DetailPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 1),
       child: Column(
@@ -19,9 +20,10 @@ class DetailPart extends StatelessWidget {
             children: [
               Text(
                 LocaleKeys.detailPage_filmName.locale,
-                style: const TextStyle(fontSize: 20),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(width: 5),
+              SizedBox(width: size.width * 0.03),
               Flexible(
                 child: Text(
                   cardModel.itemName.toString(),
@@ -30,13 +32,17 @@ class DetailPart extends StatelessWidget {
               ),
             ],
           ),
+          SizedBox(
+            height: size.height * 0.025,
+          ),
           Row(
             children: [
               Text(
                 LocaleKeys.detailPage_writerName.locale,
-                style: const TextStyle(fontSize: 20),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(width: 5),
+              SizedBox(width: size.width * 0.03),
               Flexible(
                 child: Text(
                   cardModel.itemCreater.toString(),
@@ -45,22 +51,28 @@ class DetailPart extends StatelessWidget {
               ),
             ],
           ),
+          SizedBox(
+            height: size.height * 0.025,
+          ),
           Row(
             children: [
               Text(
                 LocaleKeys.detailPage_aboutContent.locale,
-                style: const TextStyle(fontSize: 20),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(width: 5),
-              Flexible(
-                child: Text(
-                  cardModel.shortTextForItem.toString(),
-                  maxLines: 1,
-                  style: const TextStyle(fontSize: 20),
-                ),
-              ),
+              SizedBox(width: size.width * 0.03),
             ],
           ),
+          SingleChildScrollView(
+            child: SizedBox(
+              height: size.height * 0.28,
+              child: Text(
+                cardModel.shortTextForItem.toString(),
+                style: const TextStyle(fontSize: 20),
+              ),
+            ),
+          )
         ],
       ),
     );
