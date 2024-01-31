@@ -1,19 +1,24 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:mylibrary/localizations/language/locale_keys.g.dart';
 import 'package:mylibrary/localizations/string_extensions.dart';
+import 'package:mylibrary/providers/all_providers.dart';
+import 'package:mylibrary/widgets/my_snack_bar.dart';
 
 // ignore: must_be_immutable
-class SignUpAccount extends StatelessWidget {
+class SignUpAccount extends ConsumerWidget {
   VoidCallback onPressed;
+  String email;
   SignUpAccount({
     Key? key,
     required this.onPressed,
+    required this.email,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -43,7 +48,14 @@ class SignUpAccount extends StatelessWidget {
             style: ButtonStyle(
               overlayColor: MaterialStateProperty.all(Colors.transparent),
             ),
-            onPressed: () {},
+            onPressed: () {
+              ref.watch(authenticationProvider.notifier).forgotPassword(email);
+              MySnackBar.snackBar(
+                context,
+                LocaleKeys.login_register_passwordUpdateEmailHasBeenSent.locale,
+                3,
+              );
+            },
             child: Text(
               LocaleKeys.login_register_forgotPassword.locale,
               style: TextStyle(

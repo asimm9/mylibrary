@@ -9,7 +9,9 @@
     "signIn":"Sign In",
     "or":"OR",
     "continueWithGoogle":"Continue with Google",
-
+    "emailConfirmedUserLogin":"Email confirmed user login",
+    "activationLinkHasBeenSent":"Activation link has been sent to your email, please confirm",
+    "passwordUpdateEmailHasBeenSent": "Password update email has been sent", 
     "register":"Register",
     "user_name":"User Name",
     "confirmPassword":"Confirm Password",
