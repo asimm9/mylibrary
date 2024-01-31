@@ -66,6 +66,10 @@ class AddPageElevatedButton extends ConsumerWidget {
           return;
         }
 
+        createrNameController.clear();
+        contentTypeNameController.clear();
+        ref.watch(currentSliderValueProvider.notifier).state = 1;
+        summaryTextController.clear();
         ref.watch(selectedItemtypeProvider.notifier).state = null;
       },
       child: Text(
