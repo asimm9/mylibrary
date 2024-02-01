@@ -26,7 +26,7 @@ class RegisterPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Size size = MediaQuery.of(context).size;
-
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -112,12 +112,26 @@ class RegisterPage extends ConsumerWidget {
                       } else {
                         if (_formKey.currentState!.validate()) {
                           try {
-                            await ref
+                            ref
                                 .watch(authenticationProvider.notifier)
                                 .register(
                                     emailController.text,
                                     passwordController.text,
-                                    userNameController.text);
+                                    userNameController.text)
+                                .then((user) {
+                              if (user != null) {
+                                user.sendEmailVerification().then((value) {
+                                  firebaseAuth.signOut();
+                                  MySnackBar.snackBar(
+                                    context,
+                                    LocaleKeys
+                                        .login_register_activationLinkHasBeenSent
+                                        .locale,
+                                    3,
+                                  );
+                                });
+                              }
+                            });
                           } on FirebaseAuthException catch (error) {
                             if (error.code == 'email-already-in-use') {
                               MySnackBar.snackBar(

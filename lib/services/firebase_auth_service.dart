@@ -12,19 +12,23 @@ class FirebaseAuthService extends ChangeNotifier {
 
   Stream<User?> get authStateChangegs => _auth.authStateChanges();
 
-  Future<User> signIn(String email, String password) async {
-    var user = await _auth.signInWithEmailAndPassword(
+  Future<User?> signIn(String email, String password) async {
+    UserCredential user = await _auth.signInWithEmailAndPassword(
         email: email, password: password);
-    return user.user!;
+    User? lastUser = user.user;
+    return lastUser;
   }
 
   signOut() async {
     return await _auth.signOut();
   }
 
-  Future<User> register(String email, String password, String? username) async {
+  Future<User?> register(
+      String email, String password, String? username) async {
     UserCredential user = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
+    User? lastUser = user.user;
+
     Map<String, dynamic> dataMap = {
       'email': email,
       'id': user.user!.uid,
@@ -34,7 +38,14 @@ class FirebaseAuthService extends ChangeNotifier {
         .collection('UserCard')
         .doc(_auth.currentUser!.uid)
         .set(dataMap);
-    return user.user!;
+
+    return lastUser;
+  }
+
+  forgotPassword(String email) {
+    _auth.sendPasswordResetEmail(email: email).then((value) {
+      _auth.signOut();
+    });
   }
 
   Future<User> authWithGoogle() async {

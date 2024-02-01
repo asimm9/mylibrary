@@ -10,7 +10,9 @@
     "signIn":"Oturum aç",
     "or":"Ya da",
     "continueWithGoogle":"Google ile giriş yap",
-
+    "emailConfirmedUserLogin":"Email onaylı kullanıcı girişi yapılıyor",
+    "activationLinkHasBeenSent":"Emailinize aktivasyon linki gönderildi lütfen onaylayınız'",
+    "passwordUpdateEmailHasBeenSent":"Şifre güncelleme maili gönderildi",
     "register":"Kayıt Ol",
     "user_name":"Kullanıcı Adı",
     "confirmPassword":"Şifreyi Onaylayın",

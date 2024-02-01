@@ -23,6 +23,7 @@ class LoginPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -74,17 +75,37 @@ class LoginPage extends ConsumerWidget {
                       return null;
                     },
                   ),
-                  SignUpAccount(onPressed: onPressed),
+                  SignUpAccount(
+                      onPressed: onPressed, email: emailController.text),
                   const SizedBox(height: 15),
                   MyButton(
                     mycolor: Theme.of(context).colorScheme.tertiary,
                     onTap: () async {
                       try {
                         if (_formKey.currentState!.validate()) {
-                          await ref
+                          ref
                               .watch(authenticationProvider.notifier)
-                              .signIn(emailController.text,
-                                  passwordController.text);
+                              .signIn(
+                                  emailController.text, passwordController.text)
+                              .then((user) {
+                            if (user!.emailVerified) {
+                              MySnackBar.snackBar(
+                                  context,
+                                  LocaleKeys
+                                      .login_register_emailConfirmedUserLogin
+                                      .locale,
+                                  1);
+                            } else {
+                              user.sendEmailVerification();
+                              MySnackBar.snackBar(
+                                  context,
+                                  LocaleKeys
+                                      .login_register_activationLinkHasBeenSent
+                                      .locale,
+                                  4);
+                              _auth.signOut();
+                            }
+                          });
                         }
                       } on FirebaseException catch (error) {
                         if (error.code == 'invalid-credential') {
