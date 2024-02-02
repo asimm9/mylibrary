@@ -68,7 +68,7 @@ class FirebaseAuthService extends ChangeNotifier {
         .collection('UserCard')
         .doc(_auth.currentUser!.uid)
         .set(dataMap);
-    print(userCredential.user!.toString());
+    debugPrint(userCredential.user!.toString());
     return userCredential.user!;
   }
 }

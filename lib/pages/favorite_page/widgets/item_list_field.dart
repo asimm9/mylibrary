@@ -59,6 +59,8 @@ class _ItemListFavoriteFieldState extends ConsumerState<ItemListFavoriteField> {
                     .map((DocumentSnapshot documentSnapshot) =>
                         documentSnapshot.data() as Map<String, dynamic>)
                     .toList();
+                CardModel cardModel = CardModel.fromJson(data[index]);
+
                 final item =
                     ItemCard(cardModel: CardModel.fromJson(data[index]));
                 return Dismissible(
@@ -78,21 +80,15 @@ class _ItemListFavoriteFieldState extends ConsumerState<ItemListFavoriteField> {
                   behavior: HitTestBehavior.translucent,
                   direction: DismissDirection.endToStart,
                   onDismissed: (direction) {
-                    ref.watch(fireStoreServiceProvider).getCurrentBoolValue(
-                          CardModel.fromJson(
-                            data[index],
-                          ),
-                        );
+                    ref
+                        .watch(fireStoreServiceProvider)
+                        .controlFavorite(cardModel.id!, false);
                     if (direction == DismissDirection.endToStart) {
                       MySnackBar.snackBar(context,
                           LocaleKeys.validators_cardRemovedFavorite.locale, 2);
                     }
                   },
-                  child: ItemCard(
-                    cardModel: CardModel.fromJson(
-                      data[index],
-                    ),
-                  ),
+                  child: ItemCard(cardModel: cardModel),
                 );
               },
             );

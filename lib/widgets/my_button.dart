@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mylibrary/companants/text_style.dart';
 
 class MyButton extends ConsumerWidget {
   final String text;
@@ -39,24 +40,10 @@ class MyButton extends ConsumerWidget {
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   const SizedBox(width: 10),
-                  Text(
-                    text,
-                    style: TextStyle(
-                        fontFamily: 'Roboto',
-                        fontSize: 22,
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context).colorScheme.primary),
-                  ),
+                  Text(text, style: myButtonTextStyle(context)),
                 ],
               )
-            : Text(
-                text,
-                style: const TextStyle(
-                    fontFamily: 'Roboto',
-                    fontSize: 22,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white),
-              ),
+            : Text(text, style: myButtonTextStyle(context)),
       ),
     );
   }
