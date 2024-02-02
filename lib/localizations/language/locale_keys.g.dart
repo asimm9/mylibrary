@@ -1,7 +1,5 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-// ignore_for_file: constant_identifier_names
-
 abstract class LocaleKeys {
   static const login_register_logIn = 'login_register.logIn';
   static const login_register_email = 'login_register.email';
@@ -14,6 +12,12 @@ abstract class LocaleKeys {
   static const login_register_or = 'login_register.or';
   static const login_register_continueWithGoogle =
       'login_register.continueWithGoogle';
+  static const login_register_emailConfirmedUserLogin =
+      'login_register.emailConfirmedUserLogin';
+  static const login_register_activationLinkHasBeenSent =
+      'login_register.activationLinkHasBeenSent';
+  static const login_register_passwordUpdateEmailHasBeenSent =
+      'login_register.passwordUpdateEmailHasBeenSent';
   static const login_register_register = 'login_register.register';
   static const login_register_user_name = 'login_register.user_name';
   static const login_register_confirmPassword =
