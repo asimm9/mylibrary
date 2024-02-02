@@ -22,6 +22,7 @@ class PopUpMenuButtonWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    const List<Locale> supportedLocales = AppConstant.SUPPORTED_LANG;
     int count = ref.watch(languageCountProvider.notifier).count;
     return PopupMenuButton(
       position: PopupMenuPosition.under,
@@ -31,7 +32,6 @@ class PopUpMenuButtonWidget extends ConsumerWidget {
         if (value == 1) {
           themeModeProvider.toggleThemeMode();
         } else if (value == 2) {
-          const List<Locale> supportedLocales = AppConstant.SUPPORTED_LANG;
           try {
             context.setLocale(supportedLocales[count]);
             ref.watch(languageCountProvider.notifier).incrementCount();
@@ -70,7 +70,7 @@ class PopUpMenuButtonWidget extends ConsumerWidget {
                     color: Theme.of(context).colorScheme.tertiary),
                 const SizedBox(width: 10),
                 Text(
-                  context.locale.languageCode,
+                  supportedLocales[count].languageCode,
                 )
               ],
             ),

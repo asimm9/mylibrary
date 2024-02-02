@@ -148,7 +148,7 @@ class FireStoreService extends ChangeNotifier {
       filterCardStream =
           filterCard().where('itemType', whereIn: itemTypeLit).snapshots();
     } else {
-      print(
+      debugPrint(
           'Uyarı: Boş bir liste, whereIn filtresi için sorgu çalıştırılmadı.');
     }
   }
@@ -158,7 +158,7 @@ class FireStoreService extends ChangeNotifier {
       itemRateCardStream =
           filterCard().where('itemRate', whereIn: itemRateList).snapshots();
     } else {
-      print(
+      debugPrint(
           'Uyarı: Boş bir liste, whereIn filtresi için sorgu çalıştırılmadı.');
     }
   }
@@ -177,7 +177,7 @@ class FireStoreService extends ChangeNotifier {
           .where('itemType', whereIn: itemTypeLit)
           .snapshots();
     } else {
-      print(
+      debugPrint(
           'Uyarı: Boş bir liste, whereIn filtresi için sorgu çalıştırılmadı.');
     }
   }
@@ -189,7 +189,7 @@ class FireStoreService extends ChangeNotifier {
           .where('itemRate', whereIn: itemRateList)
           .snapshots();
     } else {
-      print(
+      debugPrint(
           'Uyarı: Boş bir liste, whereIn filtresi için sorgu çalıştırılmadı.');
     }
   }

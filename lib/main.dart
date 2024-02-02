@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mylibrary/companants/app_constans.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:mylibrary/pages/control_page/control_page.dart';
+import 'package:mylibrary/pages/splash_screen_page/splash_screen_page.dart';
 import 'package:mylibrary/providers/all_providers.dart';
-import 'package:mylibrary/providers/auth_page_change.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -30,7 +29,6 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authState = ref.watch(authStateChangesProvider);
     final themeModeState = ref.watch(themeModeProvider);
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
@@ -38,19 +36,7 @@ class MyApp extends ConsumerWidget {
       locale: context.locale,
       themeMode: ThemeMode.system,
       theme: themeModeState.themeData,
-      home: authState.when(
-        data: (data) {
-          if (data != null) {
-            return const ControlPage();
-          } else {
-            return const AuthPageChange();
-          }
-        },
-        error: (error, stackTrace) => ErrorWidget(error),
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
-      ),
+      home: const SplashScreenPage(),
       debugShowCheckedModeBanner: false,
     );
   }
