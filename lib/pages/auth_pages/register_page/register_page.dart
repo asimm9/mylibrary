@@ -122,6 +122,7 @@ class RegisterPage extends ConsumerWidget {
                               if (user != null) {
                                 user.sendEmailVerification().then((value) {
                                   firebaseAuth.signOut();
+
                                   MySnackBar.snackBar(
                                     context,
                                     LocaleKeys
