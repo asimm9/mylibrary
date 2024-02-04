@@ -153,6 +153,10 @@ class _SearchFilterState extends ConsumerState<SearchFilter> {
                       onTap: () {
                         ref.watch(itemTypeValueListProvider).updateListValue();
                         ref.watch(itemRateValueListProvider).updateListValue();
+                        widget.typeList =
+                            List.filled(widget.typeList.length, false);
+                        widget.itemRateList =
+                            List.filled(widget.itemRateList.length, false);
                       },
                       myheight: 0.05,
                       mycolor: Colors.grey.shade400,

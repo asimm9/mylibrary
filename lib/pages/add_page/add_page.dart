@@ -76,7 +76,7 @@ class _AddFormState extends ConsumerState<AddForm> {
               },
             ),
             SelectedItemType(itemType: itemType),
-            const CustomSlider(),
+            CustomSlider(),
             AddPageElevatedButton(
               fireStoreService: fireStoreService,
               uuid: _uuid,
