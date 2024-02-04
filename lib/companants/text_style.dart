@@ -16,7 +16,7 @@ TextStyle appBarTitleTextStyle = const TextStyle(
     fontFamily: 'Roboto', fontSize: 20, fontWeight: FontWeight.w400);
 
 TextStyle filterTextStyle = const TextStyle(
-    fontFamily: 'Roboto', fontSize: 20, fontWeight: FontWeight.w400);
+    fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w400);
 
 TextStyle textFieldTextColor(BuildContext context) {
   return TextStyle(color: Theme.of(context).colorScheme.surface);
