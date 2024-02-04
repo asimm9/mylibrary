@@ -130,6 +130,9 @@ class RegisterPage extends ConsumerWidget {
                                         .locale,
                                     3,
                                   );
+                                  ref
+                                      .watch(showPageChangeProvider.notifier)
+                                      .showPageChangeFunction();
                                 });
                               }
                             });
