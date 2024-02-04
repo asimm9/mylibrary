@@ -37,7 +37,6 @@ class MyTextField extends StatelessWidget {
           maxLines: maxLines,
           maxLength: maxLength,
           controller: textController,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
           obscureText: obscureText,
           decoration: InputDecoration(
             filled: true,
