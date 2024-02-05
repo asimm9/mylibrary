@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
 import 'package:flutter/material.dart';
+
 import 'package:mylibrary/companants/colors.dart';
 import 'package:mylibrary/companants/text_style.dart';
 
@@ -13,6 +14,7 @@ class MyTextField extends StatelessWidget {
   int maxLines;
   int? maxLength;
   bool obscureText;
+  AutovalidateMode? autovalidateMode;
   MyTextField({
     Key? key,
     required this.textController,
@@ -24,6 +26,7 @@ class MyTextField extends StatelessWidget {
     this.maxLines = 1,
     this.maxLength,
     this.obscureText = false,
+    this.autovalidateMode,
   }) : super(key: key);
 
   @override
@@ -38,6 +41,7 @@ class MyTextField extends StatelessWidget {
           maxLength: maxLength,
           controller: textController,
           obscureText: obscureText,
+          autovalidateMode: autovalidateMode,
           decoration: InputDecoration(
             filled: true,
             fillColor: Theme.of(context).colorScheme.primary,

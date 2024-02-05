@@ -48,6 +48,7 @@ class LoginPage extends ConsumerWidget {
                     textController: emailController,
                     hintText: LocaleKeys.login_register_email.locale,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validatorFunction: (value) {
                       if (value != null) {
                         if (value.length > 5 &&
@@ -66,11 +67,15 @@ class LoginPage extends ConsumerWidget {
                     textController: passwordController,
                     hintText: LocaleKeys.login_register_password.locale,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     maxLength: 6,
                     obscureText: true,
                     validatorFunction: (value) {
                       if (value!.isEmpty) {
                         return LocaleKeys.validators_enterPassword.locale;
+                      }
+                      if (value.length < 6) {
+                        return LocaleKeys.validators_enter6DigitPassword.locale;
                       }
                       return null;
                     },
@@ -83,29 +88,28 @@ class LoginPage extends ConsumerWidget {
                     onTap: () async {
                       try {
                         if (_formKey.currentState!.validate()) {
-                          ref
+                          var user = await ref
                               .watch(authenticationProvider.notifier)
-                              .signIn(
-                                  emailController.text, passwordController.text)
-                              .then((user) {
-                            if (user!.emailVerified) {
-                              MySnackBar.snackBar(
-                                  context,
-                                  LocaleKeys
-                                      .login_register_emailConfirmedUserLogin
-                                      .locale,
-                                  1);
-                            } else {
-                              user.sendEmailVerification();
-                              MySnackBar.snackBar(
-                                  context,
-                                  LocaleKeys
-                                      .login_register_activationLinkHasBeenSent
-                                      .locale,
-                                  4);
-                              _auth.signOut();
-                            }
-                          });
+                              .signIn(emailController.text,
+                                  passwordController.text);
+
+                          if (user!.emailVerified) {
+                            MySnackBar.snackBar(
+                                context,
+                                LocaleKeys
+                                    .login_register_emailConfirmedUserLogin
+                                    .locale,
+                                1);
+                          } else {
+                            user.sendEmailVerification();
+                            MySnackBar.snackBar(
+                                context,
+                                LocaleKeys
+                                    .login_register_activationLinkHasBeenSent
+                                    .locale,
+                                4);
+                            _auth.signOut();
+                          }
                         }
                       } on FirebaseException catch (error) {
                         if (error.code == 'invalid-credential') {
