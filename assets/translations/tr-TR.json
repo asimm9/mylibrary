@@ -71,6 +71,7 @@
     "enterUserName":"'Lütfen bir kullanıcı adı giriniz'.",
     "enterConfirmPassword":"Lütfen şifrenizi doğrulayınız.",
     "passwordsDoNotMatch":"Şifreler eşleşmiyor !",
+    "enter6DigitPassword":"Lütfen 6 haneli şifre giriniz.",
     "emailAlreadyExist":"Bu e-posta zaten var. Başka bir e-posta deneyiniz.",
     "registerPleaseTryAgain":"Kaydolurken bir hata oluştu. Lütfen tekrar deneyin.",
     "cardPleaseTryAgain":"'Card oluşturulurken bir hata oluştu. Tekrar deneyiniz.'",

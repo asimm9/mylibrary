@@ -26,9 +26,8 @@ class RegisterPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Size size = MediaQuery.of(context).size;
-    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Center(
         child: SizedBox(
@@ -44,6 +43,7 @@ class RegisterPage extends ConsumerWidget {
                     textController: userNameController,
                     hintText: LocaleKeys.login_register_user_name.locale,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validatorFunction: (value) {
                       if (value!.isEmpty) {
                         return LocaleKeys.validators_enterUserName.locale;
@@ -56,6 +56,7 @@ class RegisterPage extends ConsumerWidget {
                     textController: emailController,
                     hintText: LocaleKeys.login_register_email.locale,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validatorFunction: (value) {
                       if (value != null) {
                         if (value.length > 5 &&
@@ -74,11 +75,15 @@ class RegisterPage extends ConsumerWidget {
                     textController: passwordController,
                     hintText: LocaleKeys.login_register_password.locale,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     maxLength: 6,
                     obscureText: true,
                     validatorFunction: (value) {
                       if (value!.isEmpty) {
                         return LocaleKeys.validators_enterPassword.locale;
+                      }
+                      if (value.length < 6) {
+                        return LocaleKeys.validators_enter6DigitPassword.locale;
                       }
                       return null;
                     },
@@ -88,12 +93,16 @@ class RegisterPage extends ConsumerWidget {
                     textController: confirmPasswordController,
                     hintText: LocaleKeys.login_register_confirmPassword.locale,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     maxLength: 6,
                     obscureText: true,
                     validatorFunction: (value) {
                       if (value!.isEmpty) {
                         return LocaleKeys
                             .validators_enterConfirmPassword.locale;
+                      }
+                      if (value.length < 6) {
+                        return LocaleKeys.validators_enter6DigitPassword.locale;
                       }
                       return null;
                     },
@@ -112,30 +121,27 @@ class RegisterPage extends ConsumerWidget {
                       } else {
                         if (_formKey.currentState!.validate()) {
                           try {
-                            ref
+                            final user = await ref
                                 .watch(authenticationProvider.notifier)
                                 .register(
                                     emailController.text,
                                     passwordController.text,
-                                    userNameController.text)
-                                .then((user) {
-                              if (user != null) {
-                                user.sendEmailVerification().then((value) {
-                                  firebaseAuth.signOut();
+                                    userNameController.text);
 
-                                  MySnackBar.snackBar(
-                                    context,
-                                    LocaleKeys
-                                        .login_register_activationLinkHasBeenSent
-                                        .locale,
-                                    3,
-                                  );
-                                  ref
-                                      .watch(showPageChangeProvider.notifier)
-                                      .showPageChangeFunction();
-                                });
-                              }
-                            });
+                            if (user != null) {
+                              user.sendEmailVerification().then((value) {
+                                MySnackBar.snackBar(
+                                  context,
+                                  LocaleKeys
+                                      .login_register_activationLinkHasBeenSent
+                                      .locale,
+                                  3,
+                                );
+                                ref
+                                    .watch(showPageChangeProvider.notifier)
+                                    .showPageChangeFunction();
+                              });
+                            }
                           } on FirebaseAuthException catch (error) {
                             if (error.code == 'email-already-in-use') {
                               MySnackBar.snackBar(
