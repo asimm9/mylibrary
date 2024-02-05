@@ -5,9 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mylibrary/model/card_model.dart';
 import 'package:mylibrary/pages/detail_item_page/widgets/app_bar.dart';
 import 'package:mylibrary/pages/detail_item_page/widgets/detail_part.dart';
-import 'package:mylibrary/pages/detail_item_page/widgets/inital_favorite_value.dart';
 import 'package:mylibrary/pages/detail_item_page/widgets/last_row.dart';
-import 'package:mylibrary/providers/all_providers.dart';
 
 class ItemDetailPage extends ConsumerStatefulWidget {
   final CardModel cardModel;
@@ -19,21 +17,11 @@ class ItemDetailPage extends ConsumerStatefulWidget {
 
 class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    InitalFavoriteValue(
-        boolValue: ref.watch(fireStoreServiceProvider).currentValue);
-    ref.watch(fireStoreServiceProvider).getCurrentBoolValue(widget.cardModel);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    bool lastValue = ref.watch(fireStoreServiceProvider).lastValue;
-
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBarWidget(cardModel: widget.cardModel, lastValue: lastValue),
+      appBar: AppBarWidget(cardModel: widget.cardModel),
       body: Center(
         child: Container(
           padding: EdgeInsets.all(size.height * 0.018),
