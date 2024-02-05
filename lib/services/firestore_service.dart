@@ -125,6 +125,7 @@ class FireStoreService extends ChangeNotifier {
         .doc(cardModel.id)
         .get()
         .then((value) {
+      lastValue = value.data()!['isFavorite'];
       currentValue = value.data()!['isFavorite'];
     });
   }

@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,11 +12,9 @@ import 'package:mylibrary/providers/all_providers.dart';
 class AppBarWidget extends ConsumerStatefulWidget
     implements PreferredSizeWidget {
   CardModel cardModel;
-  bool lastValue;
   AppBarWidget({
     super.key,
     required this.cardModel,
-    required this.lastValue,
   });
   @override
   Size get preferredSize => const Size.fromHeight(100);
@@ -26,7 +25,14 @@ class AppBarWidget extends ConsumerStatefulWidget
 
 class _AppBarWidgetState extends ConsumerState<AppBarWidget> {
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    ref.watch(fireStoreServiceProvider).getCurrentBoolValue(widget.cardModel);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    bool sonDeger = ref.watch(fireStoreServiceProvider).lastValue;
     return AppBar(
       centerTitle: true,
       title: Text('myLibrary', style: appBarTitleTextStyle),
@@ -45,21 +51,22 @@ class _AppBarWidgetState extends ConsumerState<AppBarWidget> {
       actions: [
         IconButton(
           onPressed: () {
-            if (widget.lastValue == false) {
+            if (ref.watch(fireStoreServiceProvider).currentValue == false) {
               setState(() {
-                widget.lastValue = true;
+                sonDeger = true;
               });
+              ref.watch(fireStoreServiceProvider.notifier).lastValue = true;
             } else {
               setState(() {
-                widget.lastValue = false;
+                sonDeger = false;
               });
+              ref.watch(fireStoreServiceProvider.notifier).lastValue = false;
             }
-            //ref.watch(fireStoreServiceProvider).getCurrentBoolValue(lastValue);
             ref
                 .watch(fireStoreServiceProvider)
-                .controlFavorite(widget.cardModel.id!, widget.lastValue);
+                .controlFavorite(widget.cardModel.id!, sonDeger);
           },
-          icon: ref.watch(fireStoreServiceProvider).lastValue
+          icon: sonDeger
               ? const Icon(
                   Icons.favorite,
                   color: Colors.red,
