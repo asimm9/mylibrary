@@ -7,13 +7,13 @@ import 'package:mylibrary/model/card_model.dart';
 class FireStoreService extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
+/* 
   bool _currentValue = false;
   bool get currentValue => _currentValue;
   set currentValue(bool value) {
     _currentValue = value;
     notifyListeners();
-  }
+  } */
 
   bool _lastValue = false;
   bool get lastValue => _lastValue;
@@ -117,17 +117,15 @@ class FireStoreService extends ChangeNotifier {
         .snapshots();
   }
 
-  getCurrentBoolValue(CardModel cardModel) {
-    _firestore
+  getCurrentBoolValue(CardModel cardModel) async {
+    var value = await _firestore
         .collection('UserCard')
         .doc(_auth.currentUser!.uid)
         .collection('Cards')
         .doc(cardModel.id)
-        .get()
-        .then((value) {
-      lastValue = value.data()!['isFavorite'];
-      currentValue = value.data()!['isFavorite'];
-    });
+        .get();
+    lastValue = value.data()!['isFavorite'];
+    //currentValue = value.data()!['isFavorite'];
   }
 
   deleteCard(CardModel cardModel) async {

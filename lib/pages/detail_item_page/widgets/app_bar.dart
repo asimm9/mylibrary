@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,10 +23,12 @@ class AppBarWidget extends ConsumerStatefulWidget
 }
 
 class _AppBarWidgetState extends ConsumerState<AppBarWidget> {
+  bool sonDeger = false;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     ref.watch(fireStoreServiceProvider).getCurrentBoolValue(widget.cardModel);
+    sonDeger = ref.watch(fireStoreServiceProvider).lastValue;
   }
 
   @override
@@ -51,7 +52,7 @@ class _AppBarWidgetState extends ConsumerState<AppBarWidget> {
       actions: [
         IconButton(
           onPressed: () {
-            if (ref.watch(fireStoreServiceProvider).currentValue == false) {
+            if (ref.watch(fireStoreServiceProvider).lastValue == false) {
               setState(() {
                 sonDeger = true;
               });
@@ -66,7 +67,7 @@ class _AppBarWidgetState extends ConsumerState<AppBarWidget> {
                 .watch(fireStoreServiceProvider)
                 .controlFavorite(widget.cardModel.id!, sonDeger);
           },
-          icon: sonDeger
+          icon: ref.watch(fireStoreServiceProvider.notifier).lastValue
               ? const Icon(
                   Icons.favorite,
                   color: Colors.red,
